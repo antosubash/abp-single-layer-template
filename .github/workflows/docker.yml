@@ -18,12 +18,12 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - uses: actions/checkout@v2
-    - name: Build the abpreact Docker image
-      run: docker build . --file abp/AbpTemplate/Dockerfile --tag abpreact:dev
+    - name: Build the abptemplate Docker image
+      run: docker build . --file abp/AbpTemplate/Dockerfile --tag abptemplate:dev
     - name: Docker tag images
-      run: docker tag abpreact:dev registry.antosubash.com/abpreact:dev
-    - name: Push abpreact image
-      run: docker push registry.antosubash.com/abpreact:dev
+      run: docker tag abptemplate:dev registry.antosubash.com/abptemplate:dev
+    - name: Push abptemplate image
+      run: docker push registry.antosubash.com/abptemplate:dev
     - name: Send Http Post Request to Deploy API
       uses: fjogeleit/http-request-action@v1
       with:
