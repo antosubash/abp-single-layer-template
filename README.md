@@ -1,4 +1,4 @@
-# About this solution
+# ABP Template
 
 This is a minimalist, non-layered startup solution with the ABP Framework. All the fundamental ABP modules are already installed.
 
