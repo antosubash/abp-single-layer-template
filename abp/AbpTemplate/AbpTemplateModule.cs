@@ -46,6 +46,8 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
+using AbpTemplate.Extensions;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace AbpTemplate;
 
@@ -110,15 +112,15 @@ public class AbpTemplateModule : AbpModule
             );
         });
 
-		PreConfigure<OpenIddictBuilder>(builder =>
-		{
-			builder.AddValidation(options =>
-			{
-				options.AddAudiences("AbpTemplate");
-				options.UseLocalServer();
-				options.UseAspNetCore();
-			});
-		});
+        PreConfigure<OpenIddictBuilder>(builder =>
+        {
+            builder.AddValidation(options =>
+            {
+                options.AddAudiences("AbpTemplate");
+                options.UseLocalServer();
+                options.UseAspNetCore();
+            });
+        });
     }
 
     public override void ConfigureServices(ServiceConfigurationContext context)
@@ -143,6 +145,16 @@ public class AbpTemplateModule : AbpModule
         ConfigureCors(context, configuration);
         ConfigureDataProtection(context);
         ConfigureEfCore(context);
+
+        context.Services.AddDataProtection()
+            .SetApplicationName("AbpReact")
+            .PersistKeysToDbContext<AbpTemplateDbContext>();
+
+        context.Services.Configure<ForwardedHeadersOptions>(options =>
+        {
+            options.ForwardedHeaders =
+                ForwardedHeaders.XForwardedProto;
+        });
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
@@ -253,7 +265,9 @@ public class AbpTemplateModule : AbpModule
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "AbpTemplate API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
-                options.CustomSchemaIds(type => type.FullName);
+                options.CustomSchemaIds(type => type.FriendlyId().Replace("[", "Of").Replace("]", ""));
+                options.CustomOperationIds(options => $"{options.ActionDescriptor.RouteValues["controller"]}{options.ActionDescriptor.RouteValues["action"]}");
+
             });
     }
 
