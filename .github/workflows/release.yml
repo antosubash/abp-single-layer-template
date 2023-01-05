@@ -1,0 +1,92 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore abp/
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Install Versionize
+      run: dotnet tool install --global Versionize
+    - name: Setup git
+      run: |
+        git config --local user.email "antosubash@live.com"
+        git config --local user.name "Anto Subash"
+    - name: Versionize Release
+      id: versionize
+      run: versionize --changelog-all --exit-insignificant-commits
+      continue-on-error: true
+    - name: No release required
+      if: steps.versionize.outcome != 'success'
+      run: echo "Skipping Release. No release required."
+    - name: Push changes to GitHub
+      if: steps.versionize.outcome == 'success'
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
+        tags: true
+    - name: "Create release"
+      if: steps.versionize.outcome == 'success'
+      uses: "actions/github-script@v5"
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
+        script: |
+          try {
+            const tags_url = context.payload.repository.tags_url + "?per_page=1"
+            const result = await github.request(tags_url)
+            const current_tag = result.data[0].name
+            await github.rest.repos.createRelease({
+              draft: false,
+              generate_release_notes: true,
+              name: current_tag,
+              owner: context.repo.owner,
+              prerelease: false,
+              repo: context.repo.repo,
+              tag_name: current_tag,
+              changelog : {
+                title: "Changelog",
+                body: "This is the changelog"
+              }
+            });
+          } catch (error) {
+            core.setFailed(error.message);
+          }
+    - name: Docker Login
+      if: steps.versionize.outcome == 'success'
+      uses: docker/login-action@v2
+      with:
+        registry: registry.antosubash.com
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    - name: Build the abptemplate Docker image
+      if: steps.versionize.outcome == 'success'
+      run: docker build . --file abp/AbpTemplate/Dockerfile --tag abptemplate:dev
+    - name: Docker tag images
+      if: steps.versionize.outcome == 'success'
+      run: docker tag abptemplate:dev registry.antosubash.com/abptemplate:dev
+    - name: Push abptemplate image
+      if: steps.versionize.outcome == 'success'
+      run: docker push registry.antosubash.com/abptemplate:dev
+    - name: Send Http Post Request to Deploy API
+      if: steps.versionize.outcome == 'success'
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: ${{ secrets.WEBHOOK_URL }}
+        method: 'POST'
