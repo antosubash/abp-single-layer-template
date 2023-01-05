@@ -2,6 +2,12 @@
 
 This is a minimalist, non-layered startup solution with the ABP Framework with little bit of customization. It is a good starting point for a new project. It is based on the changes I usually make to the default template.
 
+## Demo
+
+You can check the demo of the template here: <https://abp.antosubash.com>
+
+React App: <https://abpreact.antosubash.com>
+
 ## List of modifications from the no-layer template
 
 - Fixed the swagger class names to be more readable.
