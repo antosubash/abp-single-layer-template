@@ -65,10 +65,10 @@ public class ScopeController : AbpController
         });
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<ScopeDto>> UpdateAsync(Guid id, ScopeDto input)
+    [HttpPut("{clientId}")]
+    public async Task<ActionResult<ScopeDto>> UpdateAsync(Guid clientId, ScopeDto input)
     {
-        var scope = await _openIddictScopeRepository.GetAsync(id);
+        var scope = await _openIddictScopeRepository.GetAsync(clientId);
         scope.Name = input.Name;
         scope.DisplayName = input.DisplayName;
         scope.Description = input.Description;
