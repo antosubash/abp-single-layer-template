@@ -48,7 +48,6 @@ using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 using AbpTemplate.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
-
 namespace AbpTemplate;
 
 [DependsOn(
@@ -145,7 +144,7 @@ public class AbpTemplateModule : AbpModule
         ConfigureCors(context, configuration);
         ConfigureDataProtection(context);
         ConfigureEfCore(context);
-
+        context.Services.AddSameSiteCookiePolicy();
         context.Services.AddDataProtection()
             .SetApplicationName("AbpReact")
             .PersistKeysToDbContext<AbpTemplateDbContext>();
@@ -347,12 +346,16 @@ public class AbpTemplateModule : AbpModule
         if (!env.IsDevelopment())
         {
             app.UseErrorPage();
+            app.UseHsts();
         }
+        app.UseForwardedHeaders();
+        app.UseHttpsRedirection();
 
         app.UseCorrelationId();
         app.UseStaticFiles();
         app.UseRouting();
         app.UseCors();
+        app.UseCookiePolicy();
         app.UseAuthentication();
         app.UseAbpOpenIddictValidation();
 
