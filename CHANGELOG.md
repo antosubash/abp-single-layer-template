@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.0.1"></a>
+## [1.0.1](https://www.github.com/antosubash/AbpTemplate/releases/tag/v1.0.1) (2023-1-5)
+
+### Bug Fixes
+
+* changed the id variable for the scope update. ([f3af82d](https://www.github.com/antosubash/AbpTemplate/commit/f3af82dafb2debce3cdb469f7fecd4b60eeb8fc7))
+
+### Other
+
+* Update README.md ([f757549](https://www.github.com/antosubash/AbpTemplate/commit/f757549d23a09a7fc0e79cf61c5560493cb5c6fe))
+
 <a name="1.0.0"></a>
 ## [1.0.0](https://www.github.com/antosubash/AbpTemplate/releases/tag/v1.0.0) (2023-1-5)
 
