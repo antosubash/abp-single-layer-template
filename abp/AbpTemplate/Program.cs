@@ -11,7 +11,7 @@ public class Program
     {
         // https://www.npgsql.org/efcore/release-notes/6.0.html#opting-out-of-the-new-timestamp-mapping-logic
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-
+        var seqApiKey = Environment.GetEnvironmentVariable("SEQ_API_KEY");
         var loggerConfiguration = new LoggerConfiguration()
 #if DEBUG
             .MinimumLevel.Debug()
@@ -24,10 +24,9 @@ public class Program
             .WriteTo.Async(c => c.File("Logs/logs.txt"))
             .WriteTo.Async(c => c.Console());
 
-        if (IsMigrateDatabase(args))
+        if (seqApiKey != null)
         {
-            loggerConfiguration.MinimumLevel.Override("Volo.Abp", LogEventLevel.Warning);
-            loggerConfiguration.MinimumLevel.Override("Microsoft", LogEventLevel.Warning);
+            loggerConfiguration.WriteTo.Seq("https://seq.antosubash.com", apiKey: seqApiKey);
         }
 
         Log.Logger = loggerConfiguration.CreateLogger();
@@ -38,16 +37,11 @@ public class Program
             builder.Host.AddAppSettingsSecretsJson()
                 .UseAutofac()
                 .UseSerilog();
-            if (IsMigrateDatabase(args))
-            {
-                builder.Services.AddDataMigrationEnvironment();
-            }
+            builder.Services.AddDataMigrationEnvironment();
             await builder.AddApplicationAsync<AbpTemplateModule>();
             var app = builder.Build();
             await app.InitializeApplicationAsync();
-
             await app.Services.GetRequiredService<AbpTemplateDbMigrationService>().MigrateAsync();
-            
             Log.Information("Starting AbpTemplate.");
             await app.RunAsync();
             return 0;
@@ -66,10 +60,5 @@ public class Program
         {
             Log.CloseAndFlush();
         }
-    }
-
-    private static bool IsMigrateDatabase(string[] args)
-    {
-        return args.Any(x => x.Contains("--migrate-database", StringComparison.OrdinalIgnoreCase));
     }
 }
