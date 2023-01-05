@@ -17,11 +17,11 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 7.0.x
     - name: Restore dependencies
       run: dotnet restore abp/
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build abp/ --no-restore
     - name: Install Versionize
       run: dotnet tool install --global Versionize
     - name: Setup git
