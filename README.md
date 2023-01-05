@@ -1,15 +1,15 @@
 # ABP Template
 
-This is a minimalist, non-layered startup solution with the ABP Framework. All the fundamental ABP modules are already installed.
+This is a minimalist, non-layered startup solution with the ABP Framework with little bit of customization. It is a good starting point for a new project. It is based on the changes I usually make to the default template.
 
-## How to run
+## List of modifications from the no-layer template
 
-The application needs to connect to a database. Run the following command in the `AbpTemplate` directory:
-
-````bash
-dotnet run --migrate-database
-````
-
-This will create and seed the initial database. Then you can run the application with any IDE that supports .NET.
-
-Happy coding..!
+- Fixed the swagger class names to be more readable.
+- Added the http redirect to https
+- Added a working docker file
+- Made the migration to be run automatically on startup
+- Added the SameSite cookie option
+- Added the data protection keys to the Database
+- Added Seq logging
+- Added CI/CD pipeline with Github Actions
+- Version the project
