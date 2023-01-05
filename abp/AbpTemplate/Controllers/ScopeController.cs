@@ -1,4 +1,5 @@
 using AbpTemplate.Services.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Domain.Repositories;
@@ -7,6 +8,7 @@ using Volo.Abp.OpenIddict.Scopes;
 namespace AbpTemplate.Controllers;
 
 [Route("api/scope-management")]
+[Authorize]
 public class ScopeController : AbpController
 {
     private readonly IRepository<OpenIddictScope, Guid> _openIddictScopeRepository;

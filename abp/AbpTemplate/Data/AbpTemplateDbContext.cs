@@ -7,11 +7,14 @@ using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 
 namespace AbpTemplate.Data;
 
-public class AbpTemplateDbContext : AbpDbContext<AbpTemplateDbContext>
+public class AbpTemplateDbContext : AbpDbContext<AbpTemplateDbContext>, IDataProtectionKeyContext
 {
+
+    public DbSet<DataProtectionKey> DataProtectionKeys { get; set; } = null!;
     public AbpTemplateDbContext(DbContextOptions<AbpTemplateDbContext> options)
         : base(options)
     {
