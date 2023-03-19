@@ -75,15 +75,16 @@ jobs:
         registry: registry.antosubash.com
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
-    - name: Build the abptemplate Docker image
+    - name: Docker Build and Push
       if: steps.versionize.outcome == 'success'
-      run: docker build . --file abp/AbpTemplate/Dockerfile --tag abptemplate:dev
-    - name: Docker tag images
-      if: steps.versionize.outcome == 'success'
-      run: docker tag abptemplate:dev registry.antosubash.com/abptemplate:dev
-    - name: Push abptemplate image
-      if: steps.versionize.outcome == 'success'
-      run: docker push registry.antosubash.com/abptemplate:dev
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: abp/AbpTemplate/Dockerfile
+        push: true
+        tags: registry.antosubash.com/abptemplate:dev
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
     - name: Send Http Post Request to Deploy API
       if: steps.versionize.outcome == 'success'
       uses: fjogeleit/http-request-action@v1
