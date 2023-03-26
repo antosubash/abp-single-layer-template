@@ -138,6 +138,28 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 redirectUris: swaggerRootUrl.Select(x => $"{x}/swagger/oauth2-redirect.html").ToArray()
             );
         }
+    
+        // Cli Client
+        var cliClientId = configurationSection["AbpTemplate_Cli:ClientId"];
+        if (!cliClientId.IsNullOrWhiteSpace())
+        {
+            var cliClientRootUrl = configurationSection.GetSection("AbpTemplate_Cli:RootUrl").Get<string[]>().Select(x => x.TrimEnd('/'));
+            await CreateApplicationAsync(
+                name: cliClientId,
+                type: OpenIddictConstants.ClientTypes.Public,
+                consentType: OpenIddictConstants.ConsentTypes.Explicit,
+                displayName: "Cli Application",
+                secret: null,
+                grantTypes: new List<string>
+                {
+                    OpenIddictConstants.GrantTypes.AuthorizationCode,
+                    OpenIddictConstants.GrantTypes.RefreshToken
+                },
+                scopes: commonScopes,
+                redirectUris: cliClientRootUrl.ToArray(),
+                postLogoutRedirectUris: cliClientRootUrl.ToArray()
+            );
+        }
     }
 
     private async Task CreateApplicationAsync(
