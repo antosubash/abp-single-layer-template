@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.1.1"></a>
+## [1.1.1](https://www.github.com/antosubash/AbpTemplate/releases/tag/v1.1.1) (2023-3-26)
+
+### Bug Fixes
+
+* removed the chache from github actions ([62fd299](https://www.github.com/antosubash/AbpTemplate/commit/62fd299a88effcaa335fede1ee23345f3895fc05))
+
 <a name="1.1.0"></a>
 ## [1.1.0](https://www.github.com/antosubash/AbpTemplate/releases/tag/v1.1.0) (2023-3-26)
 
