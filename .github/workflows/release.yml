@@ -83,8 +83,6 @@ jobs:
         file: abp/AbpTemplate/Dockerfile
         push: true
         tags: registry.antosubash.com/abptemplate:dev
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
     - name: Send Http Post Request to Deploy API
       if: steps.versionize.outcome == 'success'
       uses: fjogeleit/http-request-action@v1
