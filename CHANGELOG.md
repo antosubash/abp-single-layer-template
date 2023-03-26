@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.1.0"></a>
+## [1.1.0](https://www.github.com/antosubash/AbpTemplate/releases/tag/v1.1.0) (2023-3-26)
+
+### Features
+
+* added cli template client ([f232bf3](https://www.github.com/antosubash/AbpTemplate/commit/f232bf3b2eeeaf6fc5fb0419b0a0b2a1e2cb39ec))
+
+### Other
+
+* added cli client. ([2bffd1b](https://www.github.com/antosubash/AbpTemplate/commit/2bffd1baf51846d740c883c50c9a80e48352c62f))
+* Update appsettings.json ([29a3cb0](https://www.github.com/antosubash/AbpTemplate/commit/29a3cb023a1a4123928742c62c882a919f56f63c))
+* Update README.md ([abf3579](https://www.github.com/antosubash/AbpTemplate/commit/abf357979070a07657a52c8177c73c33a47f80ae))
+* updated docker push action ([5d59d63](https://www.github.com/antosubash/AbpTemplate/commit/5d59d6399ed8d76a4f0214b8eb7957910a318b47))
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://www.github.com/antosubash/AbpTemplate/releases/tag/v1.0.1) (2023-1-5)
 
