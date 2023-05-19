@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.2.0"></a>
+## [1.2.0](https://www.github.com/antosubash/abp-single-layer-template/releases/tag/v1.2.0) (2023-5-19)
+
+### Features
+
+* new tenant api ([5f5557a](https://www.github.com/antosubash/abp-single-layer-template/commit/5f5557a6802f630c91d23c88f803ae39d87e18e9))
+
+### Other
+
+* Merge pull request #8 from antosubash/tenant ([cd485a5](https://www.github.com/antosubash/abp-single-layer-template/commit/cd485a50be88f29098297320337122bbc9226e7a))
+* tenant change ([ef4d304](https://www.github.com/antosubash/abp-single-layer-template/commit/ef4d304aa820abd7add1338fbb2a53496902e567))
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://www.github.com/antosubash/AbpTemplate/releases/tag/v1.1.1) (2023-3-26)
 
