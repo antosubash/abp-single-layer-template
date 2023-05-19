@@ -3,6 +3,7 @@ using System;
 using AbpTemplate.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace AbpTemplate.Migrations
 {
     [DbContext(typeof(AbpTemplateDbContext))]
-    partial class AbpTemplateDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230519183450_Add_Tenant_Host")]
+    partial class AddTenantHost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
