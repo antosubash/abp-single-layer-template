@@ -120,6 +120,8 @@ public class AbpTemplateModule : AbpModule
                 options.UseAspNetCore();
             });
         });
+
+        EfCoreEntityExtensionMappings.Configure();
     }
 
     public override void ConfigureServices(ServiceConfigurationContext context)

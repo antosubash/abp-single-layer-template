@@ -8,13 +8,19 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+using Volo.Abp.TenantManagement;
 
 namespace AbpTemplate.Data;
 
-public class AbpTemplateDbContext : AbpDbContext<AbpTemplateDbContext>, IDataProtectionKeyContext
+public class AbpTemplateDbContext : AbpDbContext<AbpTemplateDbContext>, IDataProtectionKeyContext, ITenantManagementDbContext
 {
 
     public DbSet<DataProtectionKey> DataProtectionKeys { get; set; } = null!;
+
+    public DbSet<Tenant> Tenants { get; set; } = null!;
+
+    public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; } = null!;
+
     public AbpTemplateDbContext(DbContextOptions<AbpTemplateDbContext> options)
         : base(options)
     {
