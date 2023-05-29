@@ -48,6 +48,8 @@ using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 using AbpTemplate.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
+using AbpTemplate.Repository;
+
 namespace AbpTemplate;
 
 [DependsOn(
@@ -321,6 +323,7 @@ public class AbpTemplateModule : AbpModule
              * Documentation: https://docs.abp.io/en/abp/latest/Entity-Framework-Core#add-default-repositories
              */
             options.AddDefaultRepositories(includeAllEntities: true);
+            options.AddRepository<Tenant, CustomTenantRepository>();
         });
 
         Configure<AbpDbContextOptions>(options =>

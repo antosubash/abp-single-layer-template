@@ -21,10 +21,15 @@ public class TenantController : AbpController
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<Guid>> GetTenantGuid(string host)
     {
         var tenant = await _tenantRepository.GetTenantByHost(host);
-        return tenant.Id;
+        if(tenant == null)
+        {
+            return Ok();
+        }
+        return Ok(tenant.Id);
     }
 
     [HttpGet("{id}")]
