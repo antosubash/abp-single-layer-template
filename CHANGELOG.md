@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.2.1"></a>
+## [1.2.1](https://www.github.com/antosubash/abp-single-layer-template/releases/tag/v1.2.1) (2023-5-29)
+
+### Bug Fixes
+
+* for multitenant check ([6a3a86f](https://www.github.com/antosubash/abp-single-layer-template/commit/6a3a86f923f3c11894e966ceeecfa7c4d0c7f425))
+
 <a name="1.2.0"></a>
 ## [1.2.0](https://www.github.com/antosubash/abp-single-layer-template/releases/tag/v1.2.0) (2023-5-19)
 
