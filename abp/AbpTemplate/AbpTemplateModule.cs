@@ -150,7 +150,7 @@ public class AbpTemplateModule : AbpModule
         ConfigureEfCore(context);
         context.Services.AddSameSiteCookiePolicy();
         context.Services.AddDataProtection()
-            .SetApplicationName("AbpReact")
+            .SetApplicationName("AbpTemplate")
             .PersistKeysToDbContext<AbpTemplateDbContext>();
 
         context.Services.Configure<ForwardedHeadersOptions>(options =>
