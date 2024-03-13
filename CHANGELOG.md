@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.3.0"></a>
+## [1.3.0](https://www.github.com/antosubash/abp-single-layer-template/releases/tag/v1.3.0) (2024-03-13)
+
+### Features
+
+* abp 8 upgrade ([3c13b96](https://www.github.com/antosubash/abp-single-layer-template/commit/3c13b9620c84de301d735df0f36193861cb33eab))
+
+### Bug Fixes
+
+* updated the AddDataProtection SetApplicationName ([c5bd473](https://www.github.com/antosubash/abp-single-layer-template/commit/c5bd47373d64582bbceb21b0cece5aa2d4e03150))
+* updated the package version ([7d0ed84](https://www.github.com/antosubash/abp-single-layer-template/commit/7d0ed84e33ea0c4a234deb1daf2e94b84ab9f605))
+
+### Other
+
+* fix; added nuget prep ([3f309ee](https://www.github.com/antosubash/abp-single-layer-template/commit/3f309ee76ec39269bffd456dbf4446f10a9eba82))
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://www.github.com/antosubash/abp-single-layer-template/releases/tag/v1.2.1) (2023-5-29)
 
