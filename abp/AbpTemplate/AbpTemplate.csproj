@@ -5,9 +5,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Version>1.2.1</Version>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+    <UserSecretsId>2ccfc6d5-a632-4ee7-9ab8-5ac9e225ddd0</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="6.0.0" />

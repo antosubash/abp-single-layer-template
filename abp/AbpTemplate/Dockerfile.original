@@ -1,15 +1,14 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
+ENV ASPNETCORE_URLS=http://+:80
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 
 # set up node
-ENV NODE_VERSION 20.11.1
+ENV NODE_VERSION 16.13.0
 ENV NODE_DOWNLOAD_URL https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz
 ENV NODE_DOWNLOAD_SHA 589b7e7eb22f8358797a2c14a0bd865459d0b44458b8f05d2721294dacc7f734
 
@@ -21,7 +20,7 @@ RUN curl -SL "$NODE_DOWNLOAD_URL" --output nodejs.tar.gz \
 
 RUN apt update && apt -y install gnupg
 
-ENV YARN_VERSION 4.1.1
+ENV YARN_VERSION 1.22.15
 
 RUN set -ex \
   && wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --import \
@@ -34,18 +33,17 @@ RUN set -ex \
   && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
 
-COPY ["AbpTemplate/AbpTemplate.csproj", "AbpTemplate/"]
-RUN dotnet restore "./AbpTemplate/AbpTemplate.csproj"
+COPY ["abp/AbpTemplate/AbpTemplate.csproj", "abp/AbpTemplate/"]
+RUN dotnet restore "abp/AbpTemplate/AbpTemplate.csproj"
 COPY . .
-WORKDIR "/src/AbpTemplate"
+WORKDIR "/src/abp/AbpTemplate"
 RUN dotnet tool install -g Volo.Abp.Cli
 ENV PATH="${PATH}:/root/.dotnet/tools"
 RUN abp install-libs
-RUN dotnet build "./AbpTemplate.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "AbpTemplate.csproj" -c Release -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./AbpTemplate.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "AbpTemplate.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
