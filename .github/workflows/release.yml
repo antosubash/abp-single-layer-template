@@ -17,7 +17,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore abp/
     - name: Build
@@ -68,6 +68,12 @@ jobs:
           } catch (error) {
             core.setFailed(error.message);
           }
+    - name: Build Package
+      if: steps.versionize.outcome == 'success'
+      run: dotnet pack --output nupkgs --configuration Release
+    # - name: Push to Nuget
+    #   if: steps.versionize.outcome == 'success'
+    #   run: dotnet nuget push "nupkgs/*.nupkg" -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
     - name: Docker Login
       if: steps.versionize.outcome == 'success'
       uses: docker/login-action@v2

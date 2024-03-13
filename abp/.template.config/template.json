@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Anto Subash",
+    "classifications": [
+        "ABP",
+        "ASP.NET Core",
+        "C#"
+    ],
+    "identity": "Anto.Abp.SingleLayer.Template",
+    "sourceName": "AbpTemplate",
+    "name": "An ABP Single Layer Template",
+    "description": "An ABP Single Layer Template",
+    "tags": {
+        "language": "c#",
+        "type": "solution"
+    },
+    "shortName": "abp-sl",
+    "preferNameDirectory": true
+}
