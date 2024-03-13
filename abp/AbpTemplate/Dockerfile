@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-RUN apt update && apt -y install nodejs gnupg yarn
+RUN apt update && apt -y install nodejs gnupg yarn npm
 
 COPY ["abp/AbpTemplate/AbpTemplate.csproj", "abp/AbpTemplate/"]
 RUN dotnet restore "./abp/AbpTemplate/AbpTemplate.csproj"
