@@ -8,36 +8,12 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# set up node
-ENV NODE_VERSION 20.11.1
-ENV NODE_DOWNLOAD_URL https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz
-ENV NODE_DOWNLOAD_SHA 589b7e7eb22f8358797a2c14a0bd865459d0b44458b8f05d2721294dacc7f734
+RUN apt update && apt -y install nodejs gnupg yarn
 
-RUN curl -SL "$NODE_DOWNLOAD_URL" --output nodejs.tar.gz \
-    && echo "$NODE_DOWNLOAD_SHA nodejs.tar.gz" | sha256sum -c - \
-    && tar -xzf "nodejs.tar.gz" -C /usr/local --strip-components=1 \
-    && rm nodejs.tar.gz \
-    && ln -s /usr/local/bin/node /usr/local/bin/nodejs
-
-RUN apt update && apt -y install gnupg
-
-ENV YARN_VERSION 4.1.1
-
-RUN set -ex \
-  && wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --import \
-  && curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
-  && curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz.asc" \
-  && gpg --batch --verify yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz \
-  && mkdir -p /opt/yarn \
-  && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/yarn --strip-components=1 \
-  && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
-  && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarnpkg \
-  && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
-
-COPY ["AbpTemplate/AbpTemplate.csproj", "AbpTemplate/"]
-RUN dotnet restore "./AbpTemplate/AbpTemplate.csproj"
+COPY ["abp/AbpTemplate/AbpTemplate.csproj", "abp/AbpTemplate/"]
+RUN dotnet restore "./abp/AbpTemplate/AbpTemplate.csproj"
 COPY . .
-WORKDIR "/src/AbpTemplate"
+WORKDIR "/src/abp/AbpTemplate"
 RUN dotnet tool install -g Volo.Abp.Cli
 ENV PATH="${PATH}:/root/.dotnet/tools"
 RUN abp install-libs
