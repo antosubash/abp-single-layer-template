@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.3.1"></a>
+## [1.3.1](https://www.github.com/antosubash/abp-single-layer-template/releases/tag/v1.3.1) (2024-03-13)
+
+### Bug Fixes
+
+* updated the docker image ([cb3549c](https://www.github.com/antosubash/abp-single-layer-template/commit/cb3549c4d550901a9cdc66a540871cf538993b17))
+
+### Other
+
+* Merge branch 'main' of https://github.com/antosubash/abp-single-layer-template ([bbfd897](https://www.github.com/antosubash/abp-single-layer-template/commit/bbfd897c9c0666489349998ccf8c57c2a6848a63))
+
 <a name="1.3.0"></a>
 ## [1.3.0](https://www.github.com/antosubash/abp-single-layer-template/releases/tag/v1.3.0) (2024-03-13)
 
