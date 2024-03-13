@@ -196,10 +196,10 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
             var application = new OpenIddictApplicationDescriptor
             {
                 ClientId = name,
-                Type = type,
                 ClientSecret = secret,
                 ConsentType = consentType,
-                DisplayName = displayName
+                DisplayName = displayName,
+                ApplicationType = type
             };
 
             Check.NotNullOrEmpty(grantTypes, nameof(grantTypes));

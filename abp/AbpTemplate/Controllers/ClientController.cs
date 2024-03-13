@@ -28,7 +28,6 @@ public class ClientController : AbpController
             PostLogoutRedirectUris = x.PostLogoutRedirectUris,
             RedirectUris = x.RedirectUris,
             Permissions = x.Permissions,
-            Type = x.Type
         }).ToList());
     }
 
@@ -42,20 +41,20 @@ public class ClientController : AbpController
             PostLogoutRedirectUris = client.PostLogoutRedirectUris,
             RedirectUris = client.RedirectUris,
             Permissions = client.Permissions,
-            Type = client.Type
         });
     }
 
     [HttpPost]
     public async Task<ActionResult<ClientDto>> CreateAsync(ClientDto input)
     {
-        var client = new OpenIddictApplication(GuidGenerator.Create());
-        client.ClientId = input.ClientId;
-        client.DisplayName = input.DisplayName;
-        client.PostLogoutRedirectUris = input.PostLogoutRedirectUris;
-        client.RedirectUris = input.RedirectUris;
-        client.Permissions = input.Permissions;
-        client.Type = input.Type;
+        var client = new OpenIddictApplication(GuidGenerator.Create())
+        {
+            ClientId = input.ClientId,
+            DisplayName = input.DisplayName,
+            PostLogoutRedirectUris = input.PostLogoutRedirectUris,
+            RedirectUris = input.RedirectUris,
+            Permissions = input.Permissions
+        };
         await _openIddictApplicationRepository.InsertAsync(client);
         return Ok(new ClientDto {
             ClientId = client.ClientId,
@@ -63,7 +62,6 @@ public class ClientController : AbpController
             PostLogoutRedirectUris = client.PostLogoutRedirectUris,
             RedirectUris = client.RedirectUris,
             Permissions = client.Permissions,
-            Type = client.Type
         });
     }
 
@@ -76,7 +74,6 @@ public class ClientController : AbpController
         client.PostLogoutRedirectUris = input.PostLogoutRedirectUris;
         client.RedirectUris = input.RedirectUris;
         client.Permissions = input.Permissions;
-        client.Type = input.Type;
         await _openIddictApplicationRepository.UpdateAsync(client);
         return Ok(new ClientDto {
             ClientId = client.ClientId,
@@ -84,7 +81,6 @@ public class ClientController : AbpController
             PostLogoutRedirectUris = client.PostLogoutRedirectUris,
             RedirectUris = client.RedirectUris,
             Permissions = client.Permissions,
-            Type = client.Type
         });
     }
 
@@ -102,7 +98,6 @@ public class ClientController : AbpController
             PostLogoutRedirectUris = client.PostLogoutRedirectUris,
             RedirectUris = client.RedirectUris,
             Permissions = client.Permissions,
-            Type = client.Type
         });
     }
 
@@ -120,7 +115,6 @@ public class ClientController : AbpController
             PostLogoutRedirectUris = client.PostLogoutRedirectUris,
             RedirectUris = client.RedirectUris,
             Permissions = client.Permissions,
-            Type = client.Type
         });
     }
 
@@ -128,7 +122,6 @@ public class ClientController : AbpController
     public async Task<ActionResult<ClientDto>> UpdateClientTypeAsync(Guid id, string clientType)
     {
         var client = await _openIddictApplicationRepository.GetAsync(id);
-        client.Type = clientType;
         await _openIddictApplicationRepository.UpdateAsync(client);
         return Ok(new ClientDto {
             ClientId = client.ClientId,
@@ -136,7 +129,6 @@ public class ClientController : AbpController
             PostLogoutRedirectUris = client.PostLogoutRedirectUris,
             RedirectUris = client.RedirectUris,
             Permissions = client.Permissions,
-            Type = client.Type
         });
     }
 
