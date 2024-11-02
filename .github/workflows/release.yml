@@ -18,6 +18,11 @@ jobs:
       run: |
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+    - name: Bump version and push tag
+      id: tag_version
+      uses: mathieudutour/github-tag-action@v6.2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Set version variables
       id: set-version
       run: echo "VERSION=${{ steps.tag_version.outputs.new_version }}" >> $GITHUB_ENV
