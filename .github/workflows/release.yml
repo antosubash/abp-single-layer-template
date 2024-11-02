@@ -39,7 +39,7 @@ jobs:
     - name: Build
       run: dotnet build abp/ --no-restore 
     - name: Build Package
-      run: dotnet pack --output nupkgs --configuration Release /p:Version=${{ steps.set-version.outputs.VERSION }}
+      run: dotnet pack --output nupkgs --configuration Release /p:Version=${{ env.VERSION }}
     - name: Push to Nuget
       run: dotnet nuget push "nupkgs/*.nupkg" -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
     - name: Docker Login
@@ -56,7 +56,7 @@ jobs:
         push: true
         tags: |
           registry.antosubash.com/abptemplate:dev
-          registry.antosubash.com/abptemplate:${{ steps.set-version.outputs.VERSION }}
+          registry.antosubash.com/abptemplate:${{ steps.tag_version.outputs.new_version }}
     - name: Create a GitHub release
       uses: ncipollo/release-action@v1
       with:
