@@ -42,12 +42,12 @@ jobs:
       run: dotnet pack --output nupkgs --configuration Release /p:Version=${{ env.VERSION }}
     - name: Push to Nuget
       run: dotnet nuget push "nupkgs/*.nupkg" -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
-    - name: Docker Login
-      uses: docker/login-action@v2
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v1
       with:
-        registry: registry.antosubash.com
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Docker Build and Push
       uses: docker/build-push-action@v4
       with:
@@ -55,8 +55,8 @@ jobs:
         file: abp/AbpTemplate/Dockerfile
         push: true
         tags: |
-          registry.antosubash.com/abptemplate:dev
-          registry.antosubash.com/abptemplate:${{ steps.tag_version.outputs.new_version }}
+          ghcr.io/${{ github.repository }}:latest
+          ghcr.io/${{ github.repository }}:${{ steps.tag_version.outputs.new_version }}
     - name: Create a GitHub release
       uses: ncipollo/release-action@v1
       with:
