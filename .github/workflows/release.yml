@@ -11,9 +11,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
+    - name: git config
+      run: |
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+    - name: Set version variables
+      id: set-version
+      run: echo "VERSION=${{ steps.tag_version.outputs.new_version }}" >> $GITHUB_ENV
+    - name: Display version from tag_version
+      run: echo "Generated version:${{ steps.tag_version.outputs.new_version }}"
+    - name: Display version
+      run: echo ${{ env.VERSION }}
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
@@ -21,76 +32,33 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore abp/
     - name: Build
-      run: dotnet build abp/ --no-restore
-    - name: Install Versionize
-      run: dotnet tool install --global Versionize
-    - name: Setup git
-      run: |
-        git config --local user.email "antosubash@live.com"
-        git config --local user.name "Anto Subash"
-    - name: Versionize Release
-      id: versionize
-      run: versionize --exit-insignificant-commits
-      continue-on-error: true
-    - name: No release required
-      if: steps.versionize.outcome != 'success'
-      run: echo "Skipping Release. No release required."
-    - name: Push changes to GitHub
-      if: steps.versionize.outcome == 'success'
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ github.ref }}
-        tags: true
-    - name: "Create release"
-      if: steps.versionize.outcome == 'success'
-      uses: "actions/github-script@v5"
-      with:
-        github-token: "${{ secrets.GITHUB_TOKEN }}"
-        script: |
-          try {
-            const tags_url = context.payload.repository.tags_url + "?per_page=1"
-            const result = await github.request(tags_url)
-            const current_tag = result.data[0].name
-            await github.rest.repos.createRelease({
-              draft: false,
-              generate_release_notes: true,
-              name: current_tag,
-              owner: context.repo.owner,
-              prerelease: false,
-              repo: context.repo.repo,
-              tag_name: current_tag,
-              changelog : {
-                title: "Changelog",
-                body: "This is the changelog"
-              }
-            });
-          } catch (error) {
-            core.setFailed(error.message);
-          }
+      run: dotnet build abp/ --no-restore 
     - name: Build Package
-      if: steps.versionize.outcome == 'success'
-      run: dotnet pack --output nupkgs --configuration Release
-    # - name: Push to Nuget
-    #   if: steps.versionize.outcome == 'success'
-    #   run: dotnet nuget push "nupkgs/*.nupkg" -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
+      run: dotnet pack --output nupkgs --configuration Release /p:Version=${{ steps.set-version.outputs.VERSION }}
+    - name: Push to Nuget
+      run: dotnet nuget push "nupkgs/*.nupkg" -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
     - name: Docker Login
-      if: steps.versionize.outcome == 'success'
       uses: docker/login-action@v2
       with:
         registry: registry.antosubash.com
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - name: Docker Build and Push
-      if: steps.versionize.outcome == 'success'
       uses: docker/build-push-action@v4
       with:
         context: .
         file: abp/AbpTemplate/Dockerfile
         push: true
-        tags: registry.antosubash.com/abptemplate:dev
+        tags: |
+          registry.antosubash.com/abptemplate:dev
+          registry.antosubash.com/abptemplate:${{ steps.set-version.outputs.VERSION }}
+    - name: Create a GitHub release
+      uses: ncipollo/release-action@v1
+      with:
+        tag: ${{ steps.tag_version.outputs.new_tag }}
+        name: Release ${{ steps.tag_version.outputs.new_tag }}
+        body: ${{ steps.tag_version.outputs.changelog }}
     - name: Send Http Post Request to Deploy API
-      if: steps.versionize.outcome == 'success'
       uses: fjogeleit/http-request-action@v1
       with:
         url: ${{ secrets.WEBHOOK_URL }}
