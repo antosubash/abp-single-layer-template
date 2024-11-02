@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <PackageType>Template</PackageType>
-        <Version>1.3.3</Version>
+        <Version>1.4.0</Version>
         <TargetFramework>net8.0</TargetFramework>
         <PackageId>Anto.Abp.SingleLayer.Template</PackageId>
         <Title>Abp Single Layer Template</Title>

@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.4.0"></a>
+## [1.4.0](https://www.github.com/antosubash/abp-single-layer-template/releases/tag/v1.4.0) (2024-11-02)
+
+### Features
+
+* abp 8.3.2 ([85281d5](https://www.github.com/antosubash/abp-single-layer-template/commit/85281d55c44ae3ab690e3b9aca87471e0712f50b))
+* commit for version ([1409153](https://www.github.com/antosubash/abp-single-layer-template/commit/140915349f1267f7c627b50142ab876d01b0fa11))
+
+### Bug Fixes
+
+* simplify versionize command in release workflow ([1d60b51](https://www.github.com/antosubash/abp-single-layer-template/commit/1d60b51a78758ec144f4fe2b25884f693d704afc))
+
 <a name="1.3.3"></a>
 ## [1.3.3](https://www.github.com/antosubash/abp-single-layer-template/releases/tag/v1.3.3) (2024-03-13)
 
