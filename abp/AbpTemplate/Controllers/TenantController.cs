@@ -25,7 +25,7 @@ public class TenantController : AbpController
     public async Task<ActionResult<Guid>> GetTenantGuid(string host)
     {
         var tenant = await _tenantRepository.GetTenantByHost(host);
-        if(tenant == null)
+        if (tenant == null)
         {
             return Ok();
         }
@@ -41,7 +41,7 @@ public class TenantController : AbpController
         {
             Id = tenant.Id,
             Name = tenant.Name,
-            Host = host
+            Host = host,
         };
     }
 
@@ -56,7 +56,7 @@ public class TenantController : AbpController
         {
             Id = tenant.Id,
             Name = tenant.Name,
-            Host = dto.Host
+            Host = dto.Host,
         };
     }
 }

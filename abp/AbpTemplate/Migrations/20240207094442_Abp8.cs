@@ -14,7 +14,8 @@ namespace AbpTemplate.Migrations
             migrationBuilder.RenameColumn(
                 name: "Type",
                 table: "OpenIddictApplications",
-                newName: "ClientType");
+                newName: "ClientType"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -24,7 +25,8 @@ namespace AbpTemplate.Migrations
                 defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "text",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -36,7 +38,8 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
                 oldMaxLength: 40,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -46,7 +49,8 @@ namespace AbpTemplate.Migrations
                 defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "text",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -58,7 +62,8 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
                 oldMaxLength: 40,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -68,7 +73,8 @@ namespace AbpTemplate.Migrations
                 defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "text",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -80,7 +86,8 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
                 oldMaxLength: 40,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -90,7 +97,8 @@ namespace AbpTemplate.Migrations
                 defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "text",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -102,26 +110,30 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
                 oldMaxLength: 40,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AddColumn<string>(
                 name: "ApplicationType",
                 table: "OpenIddictApplications",
                 type: "character varying(50)",
                 maxLength: 50,
-                nullable: true);
+                nullable: true
+            );
 
             migrationBuilder.AddColumn<string>(
                 name: "JsonWebKeySet",
                 table: "OpenIddictApplications",
                 type: "text",
-                nullable: true);
+                nullable: true
+            );
 
             migrationBuilder.AddColumn<string>(
                 name: "Settings",
                 table: "OpenIddictApplications",
                 type: "text",
-                nullable: true);
+                nullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -131,7 +143,8 @@ namespace AbpTemplate.Migrations
                 defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "text",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -143,27 +156,31 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
                 oldMaxLength: 40,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AddColumn<int>(
                 name: "EntityVersion",
                 table: "AbpUsers",
                 type: "integer",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
 
             migrationBuilder.AddColumn<DateTimeOffset>(
                 name: "LastPasswordChangeTime",
                 table: "AbpUsers",
                 type: "timestamp with time zone",
-                nullable: true);
+                nullable: true
+            );
 
             migrationBuilder.AddColumn<bool>(
                 name: "ShouldChangePasswordOnNextLogin",
                 table: "AbpUsers",
                 type: "boolean",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: false
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -173,7 +190,8 @@ namespace AbpTemplate.Migrations
                 defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "text",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -185,14 +203,16 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
                 oldMaxLength: 40,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AddColumn<int>(
                 name: "EntityVersion",
                 table: "AbpTenants",
                 type: "integer",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -202,7 +222,8 @@ namespace AbpTemplate.Migrations
                 defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "text",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -214,7 +235,8 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
                 oldMaxLength: 40,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -224,7 +246,8 @@ namespace AbpTemplate.Migrations
                 defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "text",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -236,14 +259,16 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
                 oldMaxLength: 40,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AddColumn<int>(
                 name: "EntityVersion",
                 table: "AbpRoles",
                 type: "integer",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -253,7 +278,8 @@ namespace AbpTemplate.Migrations
                 defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "text",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -265,14 +291,16 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
                 oldMaxLength: 40,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AddColumn<int>(
                 name: "EntityVersion",
                 table: "AbpOrganizationUnits",
                 type: "integer",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "EntityId",
@@ -282,7 +310,8 @@ namespace AbpTemplate.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "character varying(128)",
-                oldMaxLength: 128);
+                oldMaxLength: 128
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -292,7 +321,8 @@ namespace AbpTemplate.Migrations
                 defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "text",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -304,7 +334,8 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
                 oldMaxLength: 40,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -314,7 +345,8 @@ namespace AbpTemplate.Migrations
                 defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "text",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -326,27 +358,49 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
                 oldMaxLength: 40,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.CreateTable(
                 name: "AbpSettingDefinitions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
-                    DisplayName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    Description = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
-                    DefaultValue = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
+                    Name = table.Column<string>(
+                        type: "character varying(128)",
+                        maxLength: 128,
+                        nullable: false
+                    ),
+                    DisplayName = table.Column<string>(
+                        type: "character varying(256)",
+                        maxLength: 256,
+                        nullable: false
+                    ),
+                    Description = table.Column<string>(
+                        type: "character varying(512)",
+                        maxLength: 512,
+                        nullable: true
+                    ),
+                    DefaultValue = table.Column<string>(
+                        type: "character varying(2048)",
+                        maxLength: 2048,
+                        nullable: true
+                    ),
                     IsVisibleToClients = table.Column<bool>(type: "boolean", nullable: false),
-                    Providers = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
+                    Providers = table.Column<string>(
+                        type: "character varying(1024)",
+                        maxLength: 1024,
+                        nullable: true
+                    ),
                     IsInherited = table.Column<bool>(type: "boolean", nullable: false),
                     IsEncrypted = table.Column<bool>(type: "boolean", nullable: false),
-                    ExtraProperties = table.Column<string>(type: "text", nullable: true)
+                    ExtraProperties = table.Column<string>(type: "text", nullable: true),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AbpSettingDefinitions", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "AbpUserDelegations",
@@ -356,70 +410,59 @@ namespace AbpTemplate.Migrations
                     TenantId = table.Column<Guid>(type: "uuid", nullable: true),
                     SourceUserId = table.Column<Guid>(type: "uuid", nullable: false),
                     TargetUserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    StartTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    StartTime = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: false
+                    ),
+                    EndTime = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: false
+                    ),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AbpUserDelegations", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_AbpSettingDefinitions_Name",
                 table: "AbpSettingDefinitions",
                 column: "Name",
-                unique: true);
+                unique: true
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AbpSettingDefinitions");
+            migrationBuilder.DropTable(name: "AbpSettingDefinitions");
 
-            migrationBuilder.DropTable(
-                name: "AbpUserDelegations");
+            migrationBuilder.DropTable(name: "AbpUserDelegations");
 
-            migrationBuilder.DropColumn(
-                name: "ApplicationType",
-                table: "OpenIddictApplications");
+            migrationBuilder.DropColumn(name: "ApplicationType", table: "OpenIddictApplications");
 
-            migrationBuilder.DropColumn(
-                name: "JsonWebKeySet",
-                table: "OpenIddictApplications");
+            migrationBuilder.DropColumn(name: "JsonWebKeySet", table: "OpenIddictApplications");
 
-            migrationBuilder.DropColumn(
-                name: "Settings",
-                table: "OpenIddictApplications");
+            migrationBuilder.DropColumn(name: "Settings", table: "OpenIddictApplications");
 
-            migrationBuilder.DropColumn(
-                name: "EntityVersion",
-                table: "AbpUsers");
+            migrationBuilder.DropColumn(name: "EntityVersion", table: "AbpUsers");
 
-            migrationBuilder.DropColumn(
-                name: "LastPasswordChangeTime",
-                table: "AbpUsers");
+            migrationBuilder.DropColumn(name: "LastPasswordChangeTime", table: "AbpUsers");
 
-            migrationBuilder.DropColumn(
-                name: "ShouldChangePasswordOnNextLogin",
-                table: "AbpUsers");
+            migrationBuilder.DropColumn(name: "ShouldChangePasswordOnNextLogin", table: "AbpUsers");
 
-            migrationBuilder.DropColumn(
-                name: "EntityVersion",
-                table: "AbpTenants");
+            migrationBuilder.DropColumn(name: "EntityVersion", table: "AbpTenants");
 
-            migrationBuilder.DropColumn(
-                name: "EntityVersion",
-                table: "AbpRoles");
+            migrationBuilder.DropColumn(name: "EntityVersion", table: "AbpRoles");
 
-            migrationBuilder.DropColumn(
-                name: "EntityVersion",
-                table: "AbpOrganizationUnits");
+            migrationBuilder.DropColumn(name: "EntityVersion", table: "AbpOrganizationUnits");
 
             migrationBuilder.RenameColumn(
                 name: "ClientType",
                 table: "OpenIddictApplications",
-                newName: "Type");
+                newName: "Type"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -427,7 +470,8 @@ namespace AbpTemplate.Migrations
                 type: "text",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "text");
+                oldType: "text"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -437,7 +481,8 @@ namespace AbpTemplate.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
-                oldMaxLength: 40);
+                oldMaxLength: 40
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -445,7 +490,8 @@ namespace AbpTemplate.Migrations
                 type: "text",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "text");
+                oldType: "text"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -455,7 +501,8 @@ namespace AbpTemplate.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
-                oldMaxLength: 40);
+                oldMaxLength: 40
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -463,7 +510,8 @@ namespace AbpTemplate.Migrations
                 type: "text",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "text");
+                oldType: "text"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -473,7 +521,8 @@ namespace AbpTemplate.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
-                oldMaxLength: 40);
+                oldMaxLength: 40
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -481,7 +530,8 @@ namespace AbpTemplate.Migrations
                 type: "text",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "text");
+                oldType: "text"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -491,7 +541,8 @@ namespace AbpTemplate.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
-                oldMaxLength: 40);
+                oldMaxLength: 40
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -499,7 +550,8 @@ namespace AbpTemplate.Migrations
                 type: "text",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "text");
+                oldType: "text"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -509,7 +561,8 @@ namespace AbpTemplate.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
-                oldMaxLength: 40);
+                oldMaxLength: 40
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -517,7 +570,8 @@ namespace AbpTemplate.Migrations
                 type: "text",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "text");
+                oldType: "text"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -527,7 +581,8 @@ namespace AbpTemplate.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
-                oldMaxLength: 40);
+                oldMaxLength: 40
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -535,7 +590,8 @@ namespace AbpTemplate.Migrations
                 type: "text",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "text");
+                oldType: "text"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -545,7 +601,8 @@ namespace AbpTemplate.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
-                oldMaxLength: 40);
+                oldMaxLength: 40
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -553,7 +610,8 @@ namespace AbpTemplate.Migrations
                 type: "text",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "text");
+                oldType: "text"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -563,7 +621,8 @@ namespace AbpTemplate.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
-                oldMaxLength: 40);
+                oldMaxLength: 40
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -571,7 +630,8 @@ namespace AbpTemplate.Migrations
                 type: "text",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "text");
+                oldType: "text"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -581,7 +641,8 @@ namespace AbpTemplate.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
-                oldMaxLength: 40);
+                oldMaxLength: 40
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "EntityId",
@@ -593,7 +654,8 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(128)",
                 oldMaxLength: 128,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -601,7 +663,8 @@ namespace AbpTemplate.Migrations
                 type: "text",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "text");
+                oldType: "text"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -611,7 +674,8 @@ namespace AbpTemplate.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
-                oldMaxLength: 40);
+                oldMaxLength: 40
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExtraProperties",
@@ -619,7 +683,8 @@ namespace AbpTemplate.Migrations
                 type: "text",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "text");
+                oldType: "text"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ConcurrencyStamp",
@@ -629,7 +694,8 @@ namespace AbpTemplate.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "character varying(40)",
-                oldMaxLength: 40);
+                oldMaxLength: 40
+            );
         }
     }
 }

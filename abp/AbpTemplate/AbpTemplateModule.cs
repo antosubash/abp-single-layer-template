@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using AbpTemplate.Data;
+using AbpTemplate.Extensions;
+using AbpTemplate.Localization;
+using AbpTemplate.Repository;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
-using AbpTemplate.Data;
-using AbpTemplate.Localization;
 using OpenIddict.Validation.AspNetCore;
 using Volo.Abp;
-using Volo.Abp.Uow;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
 using Volo.Abp.AspNetCore.MultiTenancy;
@@ -44,11 +46,9 @@ using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.UI.Navigation.Urls;
+using Volo.Abp.Uow;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
-using AbpTemplate.Extensions;
-using Microsoft.AspNetCore.HttpOverrides;
-using AbpTemplate.Repository;
 
 namespace AbpTemplate;
 
@@ -62,12 +62,10 @@ namespace AbpTemplate;
     typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
     typeof(AbpSwashbuckleModule),
     typeof(AbpAspNetCoreSerilogModule),
-
     // Account module packages
     typeof(AbpAccountApplicationModule),
     typeof(AbpAccountHttpApiModule),
     typeof(AbpAccountWebOpenIddictModule),
-
     // Identity module packages
     typeof(AbpPermissionManagementDomainIdentityModule),
     typeof(AbpPermissionManagementDomainOpenIddictModule),
@@ -75,25 +73,20 @@ namespace AbpTemplate;
     typeof(AbpIdentityHttpApiModule),
     typeof(AbpIdentityEntityFrameworkCoreModule),
     typeof(AbpOpenIddictEntityFrameworkCoreModule),
-
     // Audit logging module packages
     typeof(AbpAuditLoggingEntityFrameworkCoreModule),
-
     // Permission Management module packages
     typeof(AbpPermissionManagementApplicationModule),
     typeof(AbpPermissionManagementHttpApiModule),
     typeof(AbpPermissionManagementEntityFrameworkCoreModule),
-
     // Tenant Management module packages
     typeof(AbpTenantManagementApplicationModule),
     typeof(AbpTenantManagementHttpApiModule),
     typeof(AbpTenantManagementEntityFrameworkCoreModule),
-
     // Feature Management module packages
     typeof(AbpFeatureManagementApplicationModule),
     typeof(AbpFeatureManagementEntityFrameworkCoreModule),
     typeof(AbpFeatureManagementHttpApiModule),
-
     // Setting Management module packages
     typeof(AbpSettingManagementApplicationModule),
     typeof(AbpSettingManagementEntityFrameworkCoreModule),
@@ -108,9 +101,7 @@ public class AbpTemplateModule : AbpModule
     {
         context.Services.PreConfigure<AbpMvcDataAnnotationsLocalizationOptions>(options =>
         {
-            options.AddAssemblyResource(
-                typeof(AbpTemplateResource)
-            );
+            options.AddAssemblyResource(typeof(AbpTemplateResource));
         });
 
         PreConfigure<OpenIddictBuilder>(builder =>
@@ -149,20 +140,22 @@ public class AbpTemplateModule : AbpModule
         ConfigureDataProtection(context);
         ConfigureEfCore(context);
         context.Services.AddSameSiteCookiePolicy();
-        context.Services.AddDataProtection()
+        context
+            .Services.AddDataProtection()
             .SetApplicationName("AbpTemplate")
             .PersistKeysToDbContext<AbpTemplateDbContext>();
 
         context.Services.Configure<ForwardedHeadersOptions>(options =>
         {
-            options.ForwardedHeaders =
-                ForwardedHeaders.XForwardedProto;
+            options.ForwardedHeaders = ForwardedHeaders.XForwardedProto;
         });
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
     {
-        context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
+        context.Services.ForwardIdentityAuthenticationForBearer(
+            OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme
+        );
     }
 
     private void ConfigureBundles()
@@ -171,7 +164,10 @@ public class AbpTemplateModule : AbpModule
         {
             options.StyleBundles.Configure(
                 LeptonXLiteThemeBundles.Styles.Global,
-                bundle => { bundle.AddFiles("/global-styles.css"); }
+                bundle =>
+                {
+                    bundle.AddFiles("/global-styles.css");
+                }
             );
         });
     }
@@ -189,10 +185,13 @@ public class AbpTemplateModule : AbpModule
         Configure<AppUrlOptions>(options =>
         {
             options.Applications["MVC"].RootUrl = configuration["App:SelfUrl"];
-            options.RedirectAllowedUrls.AddRange(configuration["App:RedirectAllowedUrls"].Split(','));
+            options.RedirectAllowedUrls.AddRange(
+                configuration["App:RedirectAllowedUrls"].Split(',')
+            );
 
             options.Applications["Angular"].RootUrl = configuration["App:ClientUrl"];
-            options.Applications["Angular"].Urls[AccountUrlNames.PasswordReset] = "account/reset-password";
+            options.Applications["Angular"].Urls[AccountUrlNames.PasswordReset] =
+                "account/reset-password";
         });
     }
 
@@ -200,8 +199,8 @@ public class AbpTemplateModule : AbpModule
     {
         Configure<AbpLocalizationOptions>(options =>
         {
-            options.Resources
-                .Add<AbpTemplateResource>("en")
+            options
+                .Resources.Add<AbpTemplateResource>("en")
                 .AddBaseTypes(typeof(AbpValidationResource))
                 .AddVirtualJson("/Localization/AbpTemplate");
 
@@ -243,7 +242,9 @@ public class AbpTemplateModule : AbpModule
             if (hostingEnvironment.IsDevelopment())
             {
                 /* Using physical files in development, so we don't need to recompile on changes */
-                options.FileSets.ReplaceEmbeddedByPhysical<AbpTemplateModule>(hostingEnvironment.ContentRootPath);
+                options.FileSets.ReplaceEmbeddedByPhysical<AbpTemplateModule>(
+                    hostingEnvironment.ContentRootPath
+                );
             }
         });
     }
@@ -260,18 +261,22 @@ public class AbpTemplateModule : AbpModule
     {
         services.AddAbpSwaggerGenWithOAuth(
             configuration["AuthServer:Authority"],
-            new Dictionary<string, string>
-            {
-                    {"AbpTemplate", "AbpTemplate API"}
-            },
+            new Dictionary<string, string> { { "AbpTemplate", "AbpTemplate API" } },
             options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "AbpTemplate API", Version = "v1" });
+                options.SwaggerDoc(
+                    "v1",
+                    new OpenApiInfo { Title = "AbpTemplate API", Version = "v1" }
+                );
                 options.DocInclusionPredicate((docName, description) => true);
-                options.CustomSchemaIds(type => type.FriendlyId().Replace("[", "Of").Replace("]", ""));
-                options.CustomOperationIds(options => $"{options.ActionDescriptor.RouteValues["controller"]}{options.ActionDescriptor.RouteValues["action"]}");
-
-            });
+                options.CustomSchemaIds(type =>
+                    type.FriendlyId().Replace("[", "Of").Replace("]", "")
+                );
+                options.CustomOperationIds(options =>
+                    $"{options.ActionDescriptor.RouteValues["controller"]}{options.ActionDescriptor.RouteValues["action"]}"
+                );
+            }
+        );
     }
 
     private void ConfigureAutoMapper(ServiceConfigurationContext context)
@@ -283,7 +288,8 @@ public class AbpTemplateModule : AbpModule
              * See AutoMapper's documentation to learn what it is:
              * https://docs.automapper.org/en/stable/Configuration-validation.html
              */
-            options.AddMaps<AbpTemplateModule>(/* validate: true */);
+            options.AddMaps<AbpTemplateModule>( /* validate: true */
+            );
         });
     }
 
@@ -333,7 +339,6 @@ public class AbpTemplateModule : AbpModule
                 configurationContext.UseNpgsql();
             });
         });
-
     }
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)

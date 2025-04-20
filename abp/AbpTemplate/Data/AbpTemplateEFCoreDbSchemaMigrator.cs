@@ -7,8 +7,7 @@ public class AbpTemplateEFCoreDbSchemaMigrator : ITransientDependency
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public AbpTemplateEFCoreDbSchemaMigrator(
-        IServiceProvider serviceProvider)
+    public AbpTemplateEFCoreDbSchemaMigrator(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }
@@ -21,9 +20,6 @@ public class AbpTemplateEFCoreDbSchemaMigrator : ITransientDependency
          * current scope.
          */
 
-        await _serviceProvider
-            .GetRequiredService<AbpTemplateDbContext>()
-            .Database
-            .MigrateAsync();
+        await _serviceProvider.GetRequiredService<AbpTemplateDbContext>().Database.MigrateAsync();
     }
 }

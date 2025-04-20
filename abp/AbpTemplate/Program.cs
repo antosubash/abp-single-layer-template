@@ -7,7 +7,7 @@ namespace AbpTemplate;
 
 public class Program
 {
-    public async static Task<int> Main(string[] args)
+    public static async Task<int> Main(string[] args)
     {
         // https://www.npgsql.org/efcore/release-notes/6.0.html#opting-out-of-the-new-timestamp-mapping-logic
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -35,9 +35,7 @@ public class Program
         try
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Host.AddAppSettingsSecretsJson()
-                .UseAutofac()
-                .UseSerilog();
+            builder.Host.AddAppSettingsSecretsJson().UseAutofac().UseSerilog();
             builder.Services.AddDataMigrationEnvironment();
             await builder.AddApplicationAsync<AbpTemplateModule>();
             var app = builder.Build();

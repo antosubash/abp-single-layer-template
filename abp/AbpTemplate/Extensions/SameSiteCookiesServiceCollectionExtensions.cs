@@ -46,8 +46,11 @@ public static class SameSiteCookiesServiceCollectionExtensions
         // This does not include:
         // - Chrome on Mac OS X
         // Because they do not use the Mac OS networking stack.
-        if (userAgent.Contains("Macintosh; Intel Mac OS X 10_14") &&
-            userAgent.Contains("Version/") && userAgent.Contains("Safari"))
+        if (
+            userAgent.Contains("Macintosh; Intel Mac OS X 10_14")
+            && userAgent.Contains("Version/")
+            && userAgent.Contains("Safari")
+        )
         {
             return true;
         }

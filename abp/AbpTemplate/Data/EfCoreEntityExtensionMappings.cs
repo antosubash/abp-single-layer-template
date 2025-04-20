@@ -9,14 +9,14 @@ namespace AbpTemplate.Data;
 public static class EfCoreEntityExtensionMappings
 {
     private static readonly OneTimeRunner OneTimeRunner = new OneTimeRunner();
+
     public static void Configure()
     {
         ModuleExtensionConfigurator.Configure();
 
         OneTimeRunner.Run(() =>
         {
-            ObjectExtensionManager.Instance
-                .MapEfCoreProperty<Tenant, string>(Constant.Host);
+            ObjectExtensionManager.Instance.MapEfCoreProperty<Tenant, string>(Constant.Host);
         });
     }
 }

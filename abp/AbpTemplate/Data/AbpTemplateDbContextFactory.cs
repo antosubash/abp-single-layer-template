@@ -12,8 +12,9 @@ public class AbpTemplateDbContextFactory : IDesignTimeDbContextFactory<AbpTempla
 
         var configuration = BuildConfiguration();
 
-        var builder = new DbContextOptionsBuilder<AbpTemplateDbContext>()
-            .UseNpgsql(configuration.GetConnectionString("Default"));
+        var builder = new DbContextOptionsBuilder<AbpTemplateDbContext>().UseNpgsql(
+            configuration.GetConnectionString("Default")
+        );
 
         return new AbpTemplateDbContext(builder.Options);
     }

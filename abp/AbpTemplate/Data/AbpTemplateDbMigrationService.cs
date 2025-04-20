@@ -22,7 +22,8 @@ public class AbpTemplateDbMigrationService : ITransientDependency
         IDataSeeder dataSeeder,
         AbpTemplateEFCoreDbSchemaMigrator dbSchemaMigrator,
         ITenantRepository tenantRepository,
-        ICurrentTenant currentTenant)
+        ICurrentTenant currentTenant
+    )
     {
         _dataSeeder = dataSeeder;
         _dbSchemaMigrator = dbSchemaMigrator;
@@ -57,8 +58,8 @@ public class AbpTemplateDbMigrationService : ITransientDependency
             {
                 if (tenant.ConnectionStrings.Any())
                 {
-                    var tenantConnectionStrings = tenant.ConnectionStrings
-                        .Select(x => x.Value)
+                    var tenantConnectionStrings = tenant
+                        .ConnectionStrings.Select(x => x.Value)
                         .ToList();
 
                     if (!migratedDatabaseSchemas.IsSupersetOf(tenantConnectionStrings))
@@ -72,7 +73,9 @@ public class AbpTemplateDbMigrationService : ITransientDependency
                 await SeedDataAsync(tenant);
             }
 
-            Logger.LogInformation($"Successfully completed {tenant.Name} tenant database migrations.");
+            Logger.LogInformation(
+                $"Successfully completed {tenant.Name} tenant database migrations."
+            );
         }
 
         Logger.LogInformation("Successfully completed all database migrations.");
@@ -81,17 +84,28 @@ public class AbpTemplateDbMigrationService : ITransientDependency
 
     private async Task MigrateDatabaseSchemaAsync(Tenant tenant = null)
     {
-        Logger.LogInformation($"Migrating schema for {(tenant == null ? "host" : tenant.Name + " tenant")} database...");
+        Logger.LogInformation(
+            $"Migrating schema for {(tenant == null ? "host" : tenant.Name + " tenant")} database..."
+        );
         await _dbSchemaMigrator.MigrateAsync();
     }
 
     private async Task SeedDataAsync(Tenant tenant = null)
     {
-        Logger.LogInformation($"Executing {(tenant == null ? "host" : tenant.Name + " tenant")} database seed...");
+        Logger.LogInformation(
+            $"Executing {(tenant == null ? "host" : tenant.Name + " tenant")} database seed..."
+        );
 
-        await _dataSeeder.SeedAsync(new DataSeedContext(tenant?.Id)
-            .WithProperty(IdentityDataSeedContributor.AdminEmailPropertyName, IdentityDataSeedContributor.AdminEmailDefaultValue)
-            .WithProperty(IdentityDataSeedContributor.AdminPasswordPropertyName, IdentityDataSeedContributor.AdminPasswordDefaultValue)
+        await _dataSeeder.SeedAsync(
+            new DataSeedContext(tenant?.Id)
+                .WithProperty(
+                    IdentityDataSeedContributor.AdminEmailPropertyName,
+                    IdentityDataSeedContributor.AdminEmailDefaultValue
+                )
+                .WithProperty(
+                    IdentityDataSeedContributor.AdminPasswordPropertyName,
+                    IdentityDataSeedContributor.AdminPasswordDefaultValue
+                )
         );
     }
 
@@ -147,7 +161,10 @@ public class AbpTemplateDbMigrationService : ITransientDependency
         string argumentPrefix;
         string fileName;
 
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        if (
+            RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+            || RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+        )
         {
             argumentPrefix = "-c";
             fileName = "/bin/bash";
@@ -158,7 +175,8 @@ public class AbpTemplateDbMigrationService : ITransientDependency
             fileName = "cmd.exe";
         }
 
-        var procStartInfo = new ProcessStartInfo(fileName,
+        var procStartInfo = new ProcessStartInfo(
+            fileName,
             $"{argumentPrefix} \"abp create-migration-and-run-migrator \"{GetEntityFrameworkCoreProjectFolderPath()}\" --nolayers\""
         );
 
@@ -192,7 +210,11 @@ public class AbpTemplateDbMigrationService : ITransientDependency
         {
             currentDirectory = Directory.GetParent(currentDirectory.FullName);
 
-            if (Directory.GetFiles(currentDirectory.FullName).FirstOrDefault(f => f.EndsWith(".sln")) != null)
+            if (
+                Directory
+                    .GetFiles(currentDirectory.FullName)
+                    .FirstOrDefault(f => f.EndsWith(".sln")) != null
+            )
             {
                 return currentDirectory.FullName;
             }

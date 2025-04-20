@@ -67,7 +67,8 @@ public static class ModuleExtensionConfigurator
          * https://docs.abp.io/en/abp/latest/Module-Entity-Extensions
          */
 
-        ObjectExtensionManager.Instance.Modules()
+        ObjectExtensionManager
+            .Instance.Modules()
             .ConfigureTenantManagement(tenantConfig =>
             {
                 tenantConfig.ConfigureTenant(tenant =>

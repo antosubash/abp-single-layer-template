@@ -7,13 +7,17 @@ using Volo.Abp.TenantManagement;
 
 namespace AbpTemplate.Repository
 {
-    public class CustomTenantRepository : EfCoreRepository<AbpTemplateDbContext, Tenant, Guid>, ITransientDependency
+    public class CustomTenantRepository
+        : EfCoreRepository<AbpTemplateDbContext, Tenant, Guid>,
+            ITransientDependency
     {
-        public CustomTenantRepository(IDbContextProvider<AbpTemplateDbContext> dbContextProvider) : base(dbContextProvider)
-        {
-        }
+        public CustomTenantRepository(IDbContextProvider<AbpTemplateDbContext> dbContextProvider)
+            : base(dbContextProvider) { }
 
-        public async Task<Tenant> GetTenantByHost(string host, CancellationToken cancellationToken = default)
+        public async Task<Tenant> GetTenantByHost(
+            string host,
+            CancellationToken cancellationToken = default
+        )
         {
             if (string.IsNullOrEmpty(host))
             {

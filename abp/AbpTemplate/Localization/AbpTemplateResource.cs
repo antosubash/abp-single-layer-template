@@ -3,7 +3,4 @@
 namespace AbpTemplate.Localization;
 
 [LocalizationResourceName("AbpTemplate")]
-public class AbpTemplateResource
-{
-    
-}
+public class AbpTemplateResource { }

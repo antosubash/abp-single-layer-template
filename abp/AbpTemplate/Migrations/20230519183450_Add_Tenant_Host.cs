@@ -14,15 +14,14 @@ namespace AbpTemplate.Migrations
                 name: "Host",
                 table: "AbpTenants",
                 type: "text",
-                nullable: true);
+                nullable: true
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Host",
-                table: "AbpTenants");
+            migrationBuilder.DropColumn(name: "Host", table: "AbpTenants");
         }
     }
 }

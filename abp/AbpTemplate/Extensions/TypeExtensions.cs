@@ -22,7 +22,9 @@ namespace AbpTemplate.Extensions
 
                 return new StringBuilder(typeName)
                     .Replace(string.Format("`{0}", genericArgumentIds.Count()), string.Empty)
-                    .Append(string.Format("[{0}]", string.Join(",", genericArgumentIds).TrimEnd(',')))
+                    .Append(
+                        string.Format("[{0}]", string.Join(",", genericArgumentIds).TrimEnd(','))
+                    )
                     .ToString();
             }
 
@@ -40,11 +42,17 @@ namespace AbpTemplate.Extensions
 
         public static string[] GetEnumNamesForSerialization(this Type enumType)
         {
-            return enumType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+            return enumType
+                .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
                 .Select(fieldInfo =>
                 {
-                    var memberAttribute = fieldInfo.GetCustomAttributes(false).OfType<EnumMemberAttribute>().FirstOrDefault();
-                    return (memberAttribute == null || string.IsNullOrWhiteSpace(memberAttribute.Value))
+                    var memberAttribute = fieldInfo
+                        .GetCustomAttributes(false)
+                        .OfType<EnumMemberAttribute>()
+                        .FirstOrDefault();
+                    return (
+                        memberAttribute == null || string.IsNullOrWhiteSpace(memberAttribute.Value)
+                    )
                         ? fieldInfo.Name
                         : memberAttribute.Value;
                 })
