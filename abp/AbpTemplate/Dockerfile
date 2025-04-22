@@ -20,7 +20,9 @@ WORKDIR "/src/abp/AbpTemplate"
 
 # Install dependencies and build frontend assets
 RUN yarn install
-RUN yarn build
+RUN dotnet tool install -g Volo.Abp.Cli
+ENV PATH="${PATH}:/root/.dotnet/tools"
+RUN abp install-libs
 RUN dotnet build "./AbpTemplate.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
