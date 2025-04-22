@@ -9,7 +9,7 @@ public class AbpTemplateDbContextFactory : IDesignTimeDbContextFactory<AbpTempla
     {
         // https://www.npgsql.org/efcore/release-notes/6.0.html#opting-out-of-the-new-timestamp-mapping-logic
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-
+        EfCoreEntityExtensionMappings.Configure();
         var configuration = BuildConfiguration();
 
         var builder = new DbContextOptionsBuilder<AbpTemplateDbContext>().UseNpgsql(
