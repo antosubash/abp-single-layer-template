@@ -8,7 +8,10 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-RUN apt update && apt -y install nodejs gnupg yarn npm
+# Install Node.js and Yarn
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g yarn
 
 COPY ["abp/AbpTemplate/AbpTemplate.csproj", "abp/AbpTemplate/"]
 RUN dotnet restore "./abp/AbpTemplate/AbpTemplate.csproj"
