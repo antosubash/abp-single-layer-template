@@ -17,7 +17,10 @@ COPY ["abp/AbpTemplate/AbpTemplate.csproj", "abp/AbpTemplate/"]
 RUN dotnet restore "./abp/AbpTemplate/AbpTemplate.csproj"
 COPY . .
 WORKDIR "/src/abp/AbpTemplate"
+
+# Install dependencies and build frontend assets
 RUN yarn install
+RUN yarn build
 RUN dotnet build "./AbpTemplate.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
