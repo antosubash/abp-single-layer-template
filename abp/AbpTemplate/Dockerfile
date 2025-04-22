@@ -14,9 +14,7 @@ COPY ["abp/AbpTemplate/AbpTemplate.csproj", "abp/AbpTemplate/"]
 RUN dotnet restore "./abp/AbpTemplate/AbpTemplate.csproj"
 COPY . .
 WORKDIR "/src/abp/AbpTemplate"
-RUN dotnet tool install -g Volo.Abp.Studio.Cli
-ENV PATH="${PATH}:/root/.dotnet/tools"
-RUN abp install-libs
+RUN yarn install
 RUN dotnet build "./AbpTemplate.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
