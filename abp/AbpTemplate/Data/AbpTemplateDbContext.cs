@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
+using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -9,6 +11,8 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.CmsKit;
+using Volo.CmsKit.EntityFrameworkCore;
 
 namespace AbpTemplate.Data;
 
@@ -24,7 +28,10 @@ public class AbpTemplateDbContext
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; } = null!;
 
     public AbpTemplateDbContext(DbContextOptions<AbpTemplateDbContext> options)
-        : base(options) { }
+        : base(options)
+    {
+        AbpCmsKitDbProperties.DbSchema = "cmskit";
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -39,6 +46,8 @@ public class AbpTemplateDbContext
         builder.ConfigureOpenIddict();
         builder.ConfigureFeatureManagement();
         builder.ConfigureTenantManagement();
+        builder.ConfigureBlobStoring();
+        builder.ConfigureCmsKit();
 
         /* Configure your own entities here */
     }
