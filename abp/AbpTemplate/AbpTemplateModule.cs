@@ -113,8 +113,6 @@ public class AbpTemplateModule : AbpModule
 
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
-        AbpTemplateGlobalFeatureConfigurator.Configure();
-
         context.Services.PreConfigure<AbpMvcDataAnnotationsLocalizationOptions>(options =>
         {
             options.AddAssemblyResource(typeof(AbpTemplateResource));
@@ -139,6 +137,8 @@ public class AbpTemplateModule : AbpModule
                 container.UseDatabase();
             });
         });
+
+        AbpTemplateGlobalFeatureConfigurator.Configure();
     }
 
     public override void ConfigureServices(ServiceConfigurationContext context)
@@ -294,8 +294,22 @@ public class AbpTemplateModule : AbpModule
                 );
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type =>
-                    type.FriendlyId().Replace("[", "Of").Replace("]", "")
-                );
+                {
+                    // Use fully qualified name to ensure uniqueness across different namespaces
+                    var schemaId = type.FriendlyId(true)
+                        .Replace("[", "Of")
+                        .Replace("]", "")
+                        .Replace("+", ".")
+                        .Replace("`", "");
+
+                    // Remove common prefixes to make it more readable
+                    schemaId = schemaId
+                        .Replace("Volo.Abp.", "Abp.")
+                        .Replace("Volo.CmsKit.", "CmsKit.")
+                        .Replace("AbpTemplate.", "");
+
+                    return schemaId;
+                });
                 options.CustomOperationIds(options =>
                     $"{options.ActionDescriptor.RouteValues["controller"]}{options.ActionDescriptor.RouteValues["action"]}"
                 );
