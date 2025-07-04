@@ -13,6 +13,7 @@ public static class EfCoreEntityExtensionMappings
     public static void Configure()
     {
         ModuleExtensionConfigurator.Configure();
+        AbpTemplateGlobalFeatureConfigurator.Configure();
 
         OneTimeRunner.Run(() =>
         {

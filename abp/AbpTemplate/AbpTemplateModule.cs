@@ -1,7 +1,8 @@
-﻿using AbpTemplate.Data;
+using AbpTemplate.Data;
 using AbpTemplate.Extensions;
 using AbpTemplate.Localization;
 using AbpTemplate.Repository;
+using AbpTemplate.Utils;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Extensions.DependencyInjection;
@@ -23,11 +24,15 @@ using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
+using Volo.Abp.BlobStoring;
+using Volo.Abp.BlobStoring.Database;
+using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
 using Volo.Abp.Emailing;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.PostgreSql;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
+using Volo.Abp.GlobalFeatures;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.Localization;
@@ -46,9 +51,11 @@ using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.UI.Navigation.Urls;
-using Volo.Abp.Uow;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
+using Volo.CmsKit;
+using Volo.CmsKit.EntityFrameworkCore;
+using Volo.CmsKit.Web;
 
 namespace AbpTemplate;
 
@@ -90,7 +97,14 @@ namespace AbpTemplate;
     // Setting Management module packages
     typeof(AbpSettingManagementApplicationModule),
     typeof(AbpSettingManagementEntityFrameworkCoreModule),
-    typeof(AbpSettingManagementHttpApiModule)
+    typeof(AbpSettingManagementHttpApiModule),
+    // CMS Kit module packages
+    typeof(CmsKitApplicationModule),
+    typeof(CmsKitEntityFrameworkCoreModule),
+    typeof(CmsKitHttpApiModule),
+    // Blob Storing module packages
+    typeof(BlobStoringDatabaseDomainModule),
+    typeof(BlobStoringDatabaseEntityFrameworkCoreModule)
 )]
 public class AbpTemplateModule : AbpModule
 {
@@ -115,6 +129,16 @@ public class AbpTemplateModule : AbpModule
         });
 
         EfCoreEntityExtensionMappings.Configure();
+
+        Configure<AbpBlobStoringOptions>(options =>
+        {
+            options.Containers.ConfigureDefault(container =>
+            {
+                container.UseDatabase();
+            });
+        });
+
+        AbpTemplateGlobalFeatureConfigurator.Configure();
     }
 
     public override void ConfigureServices(ServiceConfigurationContext context)
@@ -270,8 +294,22 @@ public class AbpTemplateModule : AbpModule
                 );
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type =>
-                    type.FriendlyId().Replace("[", "Of").Replace("]", "")
-                );
+                {
+                    // Use fully qualified name to ensure uniqueness across different namespaces
+                    var schemaId = type.FriendlyId(true)
+                        .Replace("[", "Of")
+                        .Replace("]", "")
+                        .Replace("+", ".")
+                        .Replace("`", "");
+
+                    // Remove common prefixes to make it more readable
+                    schemaId = schemaId
+                        .Replace("Volo.Abp.", "Abp.")
+                        .Replace("Volo.CmsKit.", "CmsKit.")
+                        .Replace("AbpTemplate.", "");
+
+                    return schemaId;
+                });
                 options.CustomOperationIds(options =>
                     $"{options.ActionDescriptor.RouteValues["controller"]}{options.ActionDescriptor.RouteValues["action"]}"
                 );
