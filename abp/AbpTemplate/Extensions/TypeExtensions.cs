@@ -15,38 +15,129 @@ namespace AbpTemplate.Extensions
         private static readonly Dictionary<Type, string[]> _enumNamesCache = new();
 
         /// <summary>
-        /// Gets a friendly identifier for the type, optionally including generic type parameters.
+        /// Gets a friendly identifier for the type, optionally including generic type parameters and optionally using only the short name.
         /// </summary>
         /// <param name="type">The type to get a friendly ID for.</param>
         /// <param name="fullyQualified">Whether to include the full namespace.</param>
+        /// <param name="shortName">Whether to use only the class name (no namespace). Takes precedence over fullyQualified if true.</param>
+        /// <param name="isUnique">A function to check if a given string is unique.</param>
         /// <returns>A friendly string representation of the type.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is null.</exception>
-        public static string FriendlyId(this Type type, bool fullyQualified = false)
+        public static string FriendlyId(
+            this Type type,
+            bool fullyQualified = false,
+            bool shortName = true,
+            Func<string, bool> isUnique = null
+        )
         {
             ArgumentNullException.ThrowIfNull(type);
 
-            var typeName = fullyQualified
-                ? type.FullNameSansTypeParameters().Replace("+", ".")
-                : type.Name;
+            // If shortName and isUnique is not provided, make it automatic
+            Func<string, bool> autoIsUnique = isUnique;
+            if (shortName && isUnique == null)
+            {
+                var allTypes = AppDomain.CurrentDomain.GetAssemblies()
+                    .SelectMany(a =>
+                    {
+                        try { return a.GetTypes(); } catch { return Array.Empty<Type>(); }
+                    })
+                    .Where(t => t.IsClass || t.IsValueType)
+                    .ToList();
+                autoIsUnique = name => allTypes.Count(t => t.Name == name) == 1;
+            }
+
+            string typeName;
+            if (shortName)
+            {
+                var className = type.Name;
+                if (autoIsUnique != null && autoIsUnique(className))
+                {
+                    typeName = className;
+                }
+                else if (autoIsUnique != null)
+                {
+                    // Remove common root namespace (e.g., Volo.CmsKit)
+                    var ns = type.Namespace ?? string.Empty;
+                    var nsParts = ns.Split('.', StringSplitOptions.RemoveEmptyEntries).ToList();
+                    if (nsParts.Count > 2 && nsParts[0] == "Volo" && nsParts[1] == "CmsKit")
+                    {
+                        nsParts = nsParts.Skip(2).ToList();
+                    }
+                    // Try adding namespace segments from right to left
+                    typeName = null;
+                    for (int i = nsParts.Count - 1; i >= 0; i--)
+                    {
+                        var candidate = string.Concat(nsParts.Skip(i)) + className;
+                        if (autoIsUnique(candidate))
+                        {
+                            typeName = candidate;
+                            break;
+                        }
+                    }
+                    // Fallback: fully qualified name with no dots
+                    if (typeName == null)
+                    {
+                        typeName = (type.FullName ?? (ns + "." + className)).Replace(".", "");
+                    }
+                }
+                else
+                {
+                    // Fallback to previous logic if no uniqueness check is provided
+                    var ns = type.Namespace ?? string.Empty;
+                    var nsParts = ns.Split('.', StringSplitOptions.RemoveEmptyEntries).ToList();
+                    if (nsParts.Count > 2 && nsParts[0] == "Volo" && nsParts[1] == "CmsKit")
+                    {
+                        nsParts = nsParts.Skip(2).ToList();
+                    }
+                    // Split class name into PascalCase segments
+                    var classParts = new List<string>();
+                    int lastIdx = 0;
+                    for (int i = 1; i < className.Length; i++)
+                    {
+                        if (char.IsUpper(className[i]))
+                        {
+                            classParts.Add(className.Substring(lastIdx, i - lastIdx));
+                            lastIdx = i;
+                        }
+                    }
+                    classParts.Add(className.Substring(lastIdx));
+
+                    // Merge nsParts and classParts, removing consecutive duplicates (case-insensitive)
+                    var merged = new List<string>();
+                    foreach (var part in nsParts.Concat(classParts))
+                    {
+                        if (
+                            merged.Count == 0
+                            || !string.Equals(merged.Last(), part, StringComparison.OrdinalIgnoreCase)
+                        )
+                        {
+                            merged.Add(part);
+                        }
+                    }
+                    typeName = string.Join("", merged);
+                }
+            }
+            else if (fullyQualified)
+            {
+                typeName = type.FullNameSansTypeParameters().Replace("+", ".");
+            }
+            else
+            {
+                typeName = type.Name;
+            }
 
             if (!type.IsGenericType)
             {
                 return typeName;
             }
 
-            var genericArguments = type.GetGenericArguments();
-            if (genericArguments.Length == 0)
-            {
-                return typeName;
-            }
-
-            var genericArgumentIds = genericArguments
-                .Select(t => t.FriendlyId(fullyQualified))
+            var argIds = type.GetGenericArguments()
+                .Select(t => t.FriendlyId(fullyQualified, shortName, autoIsUnique))
                 .ToArray();
 
             return new StringBuilder(typeName)
-                .Replace($"`{genericArgumentIds.Length}", string.Empty)
-                .Append($"[{string.Join(",", genericArgumentIds)}]")
+                .Replace($"`{argIds.Length}", string.Empty)
+                .Append($"[{string.Join(",", argIds)}]")
                 .ToString();
         }
 
