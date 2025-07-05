@@ -171,7 +171,8 @@ public class AbpTemplateModule : AbpModule
 
         context.Services.Configure<ForwardedHeadersOptions>(options =>
         {
-            options.ForwardedHeaders = ForwardedHeaders.XForwardedProto;
+            options.ForwardedHeaders =
+                ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
         });
     }
 
@@ -398,6 +399,14 @@ public class AbpTemplateModule : AbpModule
         }
         app.UseForwardedHeaders();
         app.UseHttpsRedirection();
+
+        app.Use(
+            (context, next) =>
+            {
+                context.Request.Scheme = "https";
+                return next(context);
+            }
+        );
 
         app.UseCorrelationId();
         app.UseStaticFiles();
