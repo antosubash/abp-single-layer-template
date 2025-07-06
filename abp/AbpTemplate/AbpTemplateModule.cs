@@ -54,7 +54,12 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 using Volo.CmsKit;
+using Volo.CmsKit.Comments;
 using Volo.CmsKit.EntityFrameworkCore;
+using Volo.CmsKit.MarkedItems;
+using Volo.CmsKit.Ratings;
+using Volo.CmsKit.Reactions;
+using Volo.CmsKit.Tags;
 using Volo.CmsKit.Web;
 
 namespace AbpTemplate;
@@ -163,6 +168,7 @@ public class AbpTemplateModule : AbpModule
         ConfigureCors(context, configuration);
         ConfigureDataProtection(context);
         ConfigureEfCore(context);
+        ConfigureCmsKit(context);
         context.Services.AddSameSiteCookiePolicy();
         context
             .Services.AddDataProtection()
@@ -377,6 +383,51 @@ public class AbpTemplateModule : AbpModule
             {
                 configurationContext.UseNpgsql();
             });
+        });
+    }
+
+    private void ConfigureCmsKit(ServiceConfigurationContext context)
+    {
+        // Configure CMS Kit Comments
+        Configure<CmsKitCommentOptions>(options =>
+        {
+            options.EntityTypes.Add(new CommentEntityTypeDefinition("BlogPost"));
+            options.EntityTypes.Add(new CommentEntityTypeDefinition("Page"));
+        });
+
+        Configure<CmsKitTagOptions>(options =>
+        {
+            options.EntityTypes.Add(new TagEntityTypeDefiniton("Page"));
+        });
+
+        Configure<CmsKitRatingOptions>(options =>
+        {
+            options.EntityTypes.Add(new RatingEntityTypeDefinition("Page"));
+        });
+
+        Configure<CmsKitReactionOptions>(options =>
+        {
+            options.EntityTypes.Add(
+                new ReactionEntityTypeDefinition(
+                    "Page",
+                    reactions:
+                    [
+                        new ReactionDefinition(StandardReactions.Smile),
+                        new ReactionDefinition(StandardReactions.ThumbsUp),
+                        new ReactionDefinition(StandardReactions.ThumbsDown),
+                        new ReactionDefinition(StandardReactions.Confused),
+                        new ReactionDefinition(StandardReactions.Eyes),
+                        new ReactionDefinition(StandardReactions.Heart),
+                    ]
+                )
+            );
+        });
+
+        Configure<CmsKitMarkedItemOptions>(options =>
+        {
+            options.EntityTypes.Add(
+                new MarkedItemEntityTypeDefinition("Page", StandardMarkedItems.Favorite)
+            );
         });
     }
 
