@@ -63,8 +63,8 @@ jobs:
         tag: ${{ steps.tag_version.outputs.new_tag }}
         name: Release ${{ steps.tag_version.outputs.new_tag }}
         body: ${{ steps.tag_version.outputs.changelog }}
-    - name: Send Http Post Request to Deploy API
-      uses: fjogeleit/http-request-action@v1
-      with:
-        url: ${{ secrets.WEBHOOK_URL }}
-        method: 'POST'
+    # - name: Send Http Post Request to Deploy API
+    #   uses: fjogeleit/http-request-action@v1
+    #   with:
+    #     url: ${{ secrets.WEBHOOK_URL }}
+    #     method: 'POST'
