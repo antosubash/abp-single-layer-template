@@ -59,7 +59,7 @@ abp/AbpTemplate/
 - Follow ABP Framework naming conventions
 - Use dependency injection for all services
 - Implement proper permission checks
-- Use AutoMapper for object mapping
+- Use Mapperly for object mapping
 - Follow ABP's multi-tenancy patterns
 
 ### Database

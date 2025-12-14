@@ -36,10 +36,18 @@ namespace AbpTemplate.Extensions
             Func<string, bool> autoIsUnique = isUnique;
             if (shortName && isUnique == null)
             {
-                var allTypes = AppDomain.CurrentDomain.GetAssemblies()
+                var allTypes = AppDomain
+                    .CurrentDomain.GetAssemblies()
                     .SelectMany(a =>
                     {
-                        try { return a.GetTypes(); } catch { return Array.Empty<Type>(); }
+                        try
+                        {
+                            return a.GetTypes();
+                        }
+                        catch
+                        {
+                            return Array.Empty<Type>();
+                        }
                     })
                     .Where(t => t.IsClass || t.IsValueType)
                     .ToList();
@@ -108,7 +116,11 @@ namespace AbpTemplate.Extensions
                     {
                         if (
                             merged.Count == 0
-                            || !string.Equals(merged.Last(), part, StringComparison.OrdinalIgnoreCase)
+                            || !string.Equals(
+                                merged.Last(),
+                                part,
+                                StringComparison.OrdinalIgnoreCase
+                            )
                         )
                         {
                             merged.Add(part);

@@ -20,13 +20,15 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(50)",
                 oldMaxLength: 50,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AddColumn<string>(
                 name: "FrontChannelLogoutUri",
                 table: "OpenIddictApplications",
                 type: "text",
-                nullable: true);
+                nullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "DeviceInfo",
@@ -37,7 +39,8 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(64)",
                 oldMaxLength: 64,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.CreateTable(
                 name: "AbpAuditLogExcelFiles",
@@ -45,25 +48,33 @@ namespace AbpTemplate.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     TenantId = table.Column<Guid>(type: "uuid", nullable: true),
-                    FileName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true)
+                    FileName = table.Column<string>(
+                        type: "character varying(256)",
+                        maxLength: 256,
+                        nullable: true
+                    ),
+                    CreationTime = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: false
+                    ),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AbpAuditLogExcelFiles", x => x.Id);
-                });
+                }
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AbpAuditLogExcelFiles");
+            migrationBuilder.DropTable(name: "AbpAuditLogExcelFiles");
 
             migrationBuilder.DropColumn(
                 name: "FrontChannelLogoutUri",
-                table: "OpenIddictApplications");
+                table: "OpenIddictApplications"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Type",
@@ -74,7 +85,8 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(150)",
                 oldMaxLength: 150,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "DeviceInfo",
@@ -85,7 +97,8 @@ namespace AbpTemplate.Migrations
                 oldClrType: typeof(string),
                 oldType: "character varying(256)",
                 oldMaxLength: 256,
-                oldNullable: true);
+                oldNullable: true
+            );
         }
     }
 }
