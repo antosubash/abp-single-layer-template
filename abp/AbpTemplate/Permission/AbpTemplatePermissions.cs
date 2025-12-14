@@ -11,4 +11,12 @@ public static class AbpTemplatePermissions
         public const string Default = GroupName + ".Tenant";
         public const string AddHost = Default + ".AddHost";
     }
+
+    public static class Todo
+    {
+        public const string Default = GroupName + ".Todo";
+        public const string Create = Default + ".Create";
+        public const string Update = Default + ".Update";
+        public const string Delete = Default + ".Delete";
+    }
 }

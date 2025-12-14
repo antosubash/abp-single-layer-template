@@ -20,6 +20,23 @@ public class AbpTemplatePermissionDefinitionProvider : PermissionDefinitionProvi
             AbpTemplatePermissions.Tenant.AddHost,
             L("Permission:AbpTemplate.Tenant.AddHost")
         );
+
+        var todoPermission = abpTemplateGroup.AddPermission(
+            AbpTemplatePermissions.Todo.Default,
+            L("Permission:AbpTemplate.Todo")
+        );
+        todoPermission.AddChild(
+            AbpTemplatePermissions.Todo.Create,
+            L("Permission:AbpTemplate.Todo.Create")
+        );
+        todoPermission.AddChild(
+            AbpTemplatePermissions.Todo.Update,
+            L("Permission:AbpTemplate.Todo.Update")
+        );
+        todoPermission.AddChild(
+            AbpTemplatePermissions.Todo.Delete,
+            L("Permission:AbpTemplate.Todo.Delete")
+        );
     }
 
     private static LocalizableString L(string name)

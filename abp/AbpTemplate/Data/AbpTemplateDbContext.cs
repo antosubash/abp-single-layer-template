@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+﻿using AbpTemplate.Entities;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
@@ -26,6 +27,8 @@ public class AbpTemplateDbContext
     public DbSet<Tenant> Tenants { get; set; } = null!;
 
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; } = null!;
+
+    public DbSet<Todo> Todos { get; set; } = null!;
 
     public AbpTemplateDbContext(DbContextOptions<AbpTemplateDbContext> options)
         : base(options)

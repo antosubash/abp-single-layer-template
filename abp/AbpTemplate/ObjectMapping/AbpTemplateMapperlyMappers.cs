@@ -1,33 +1,35 @@
+using AbpTemplate.Entities;
+using AbpTemplate.Services.Dtos;
 using Riok.Mapperly.Abstractions;
+using Volo.Abp.Mapperly;
 
 namespace AbpTemplate.ObjectMapping;
 
-// Example mapper structure for future use
-// Uncomment and modify as needed when adding mappings
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Source)]
+[MapExtraProperties]
+public partial class TodoToTodoDtoMapper : TwoWayMapperBase<Todo, TodoDto>
+{
+    public override partial TodoDto Map(Todo source);
 
-// For one-way mapping (Entity -> DTO):
-// [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
-// public partial class EntityToEntityDtoMapper : MapperBase<Entity, EntityDto>
-// {
-//     public override partial EntityDto Map(Entity source);
-//     public override partial void Map(Entity source, EntityDto destination);
-// }
+    public override partial void Map(Todo source, TodoDto destination);
 
-// For two-way mapping (Entity <-> DTO):
-// [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
-// public partial class EntityToEntityDtoMapper : TwoWayMapperBase<Entity, EntityDto>
-// {
-//     public override partial EntityDto Map(Entity source);
-//     public override partial void Map(Entity source, EntityDto destination);
-//     public override partial Entity ReverseMap(EntityDto destination);
-//     public override partial void ReverseMap(EntityDto destination, Entity source);
-// }
+    public override partial Todo ReverseMap(TodoDto destination);
 
-// For entities with extra properties support:
-// [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
-// [MapExtraProperties]
-// public partial class EntityToEntityDtoMapper : MapperBase<Entity, EntityDto>
-// {
-//     public override partial EntityDto Map(Entity source);
-//     public override partial void Map(Entity source, EntityDto destination);
-// }
+    public override partial void ReverseMap(TodoDto destination, Todo source);
+}
+
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Source)]
+public partial class CreateTodoDtoToTodoMapper : MapperBase<CreateTodoDto, Todo>
+{
+    public override partial Todo Map(CreateTodoDto source);
+
+    public override partial void Map(CreateTodoDto source, Todo destination);
+}
+
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Source)]
+public partial class UpdateTodoDtoToTodoMapper : MapperBase<UpdateTodoDto, Todo>
+{
+    public override partial Todo Map(UpdateTodoDto source);
+
+    public override partial void Map(UpdateTodoDto source, Todo destination);
+}

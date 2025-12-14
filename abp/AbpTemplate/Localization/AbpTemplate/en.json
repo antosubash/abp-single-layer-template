@@ -3,6 +3,13 @@
   "texts": {
     "Welcome_Title": "Welcome",
     "Welcome_Text": "This is a minimalist, single layer application startup template for the ABP Framework.",
-    "Menu:Home": "Home"
+    "Menu:Home": "Home",
+    "Permission:AbpTemplate": "AbpTemplate",
+    "Permission:AbpTemplate.Tenant": "Tenant Management",
+    "Permission:AbpTemplate.Tenant.AddHost": "Add Host",
+    "Permission:AbpTemplate.Todo": "Todo Management",
+    "Permission:AbpTemplate.Todo.Create": "Create Todo",
+    "Permission:AbpTemplate.Todo.Update": "Update Todo",
+    "Permission:AbpTemplate.Todo.Delete": "Delete Todo"
   }
 }

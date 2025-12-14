@@ -3,6 +3,7 @@ using System;
 using AbpTemplate.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace AbpTemplate.Migrations
 {
     [DbContext(typeof(AbpTemplateDbContext))]
-    partial class AbpTemplateDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251214153258_AddTodoEntity")]
+    partial class AddTodoEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,7 +94,7 @@ namespace AbpTemplate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Todos", (string)null);
+                    b.ToTable("Todos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.DataProtectionKey", b =>
@@ -110,7 +113,7 @@ namespace AbpTemplate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DataProtectionKeys", (string)null);
+                    b.ToTable("DataProtectionKeys");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
