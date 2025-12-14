@@ -6,7 +6,23 @@ This is a minimalist, non-layered startup solution with the ABP Framework. All t
 
 ## How to run
 
-The application needs to connect to a database. Run the following command in the `AbpTemplate` directory:
+### Start PostgreSQL
+
+The application needs to connect to a PostgreSQL database. You can start PostgreSQL using Docker Compose:
+
+````bash
+docker-compose up -d
+````
+
+This will start a PostgreSQL container with the following configuration:
+- Database: `AbpTemplate`
+- User: `postgres`
+- Password: `postgres`
+- Port: `5432`
+
+### Run the application
+
+After PostgreSQL is running, run the following command in the `AbpTemplate` directory:
 
 ````bash
 dotnet run --migrate-database
