@@ -1,48 +1,178 @@
-# ABP Template
+# ABP Single Layer Template
 
-This is a minimalist, non-layered startup solution with the ABP Framework with little bit of customization. It is a good starting point for a new project. It is based on the changes I usually make to the default template.
+A minimalist, non-layered startup solution with the ABP Framework. This template provides a single-layer architecture (no separate Domain/Application/Infrastructure layers) for rapid development and simplicity, with practical customizations already applied.
 
-## Demo
+## 🚀 Demo
 
-You can check the demo of the template here: <https://abp.antosubash.com>
+- **Backend API**: <https://abp.antosubash.com>
+- **React App**: <https://abpreact.antosubash.com>
+- **Tanstack React App**: <https://abp-tanstack.antosubash.com>
 
-React App: <https://abpreact.antosubash.com>
+## ✨ Features
 
-## List of modifications from the no-layer template
+This template includes several enhancements over the standard ABP no-layer template:
 
-- Fixed the swagger class names to be more readable.
-- Added the http redirect to https
-- Added a working docker file
-- Made the migration to be run automatically on startup
-- Added the SameSite cookie option
-- Added the data protection keys to the Database
-- Added Seq logging
-- Added CI/CD pipeline with Github Actions
-- Version the project
+- ✅ **Improved Swagger**: Fixed class names for better readability
+- ✅ **HTTPS Redirect**: Automatic HTTP to HTTPS redirection
+- ✅ **Docker Support**: Production-ready Dockerfile included
+- ✅ **Auto Migrations**: Database migrations run automatically on startup
+- ✅ **SameSite Cookies**: Configured for better security
+- ✅ **Database Data Protection**: Keys stored in the database
+- ✅ **Seq Logging**: Integrated Serilog with Seq support
+- ✅ **CI/CD Pipeline**: GitHub Actions workflow included
+- ✅ **Versioning**: Project versioning configured
 
-## Why?
+## 🛠️ Technology Stack
 
-I usually start a new project with the no-layer template and then I make the changes above. I thought it would be a good idea to have a template that already has these changes. I hope it will be useful for someone. If you have any suggestions, please let me know. I will try to update the template as I make changes to my projects. I will also try to keep it up to date with the latest ABP Framework version.
+- **Framework**: .NET 10.0
+- **ABP Framework**: 10.0.1
+- **Database**: PostgreSQL
+- **ORM**: Entity Framework Core
+- **Authentication**: OpenIddict
+- **Logging**: Serilog (with Seq integration)
+- **UI Theme**: LeptonXLite
+- **Container**: Docker (Linux)
 
-## Current Usage
+## 📋 Prerequisites
 
-The current usage is of this template is for the AbpReact project. I am using this template to create the backend fo the AbpReact project. You can check the progress of the project here: <https://github.com/antosubash/AbpReact>
+- .NET 10.0 SDK
+- PostgreSQL (running locally or remotely)
+- Docker (optional, for containerization)
 
-## Goals
+## 🚀 Quick Start
 
-The end goal is to have a template that can be used to create a React + ABP project with minimal effort. I will try to keep the template up to date with the latest ABP Framework version.
+### 1. Clone the Repository
 
-## How to use
+```bash
+git clone https://github.com/antosubash/abp-single-layer-template.git
+cd abp-single-layer-template
+```
 
-- Clone the repository
-- Search and replace the `AbpTemplate` with your project name
+### 2. Setup Database
 
-## How to contribute
+Ensure PostgreSQL is running. The application expects:
+- Database: `AbpTemplate` (or configure in `appsettings.json`)
+- User: `postgres` (or your configured user)
+- Password: `postgres` (or your configured password)
+- Port: `5432`
 
-- Fork the repository
-- Make your changes
-- Create a pull request
+> **Note**: PostgreSQL should be running on your system (not via Docker for development).
 
-## License
+### 3. Configure Application
 
-This project is licensed under the terms of the [MIT license](https://github.com/antosubash/AbpTemplate/blob/main/LICENSE)
+1. Update `appsettings.json` with your database connection string
+2. Optionally configure `appsettings.secrets.json` for sensitive settings
+
+### 4. Rename Project (Optional)
+
+Search and replace `AbpTemplate` with your project name throughout the solution.
+
+### 5. Run the Application
+
+```bash
+cd abp/AbpTemplate
+dotnet run --migrate-database
+```
+
+The application will:
+- Automatically create and run migrations
+- Seed initial data
+- Start on `https://localhost:44300` (or configured port)
+
+### 6. Access the Application
+
+- **Swagger UI**: `https://localhost:44300/swagger`
+- **Web UI**: `https://localhost:44300`
+
+Default credentials:
+- Username: `admin`
+- Password: `1q2w3E*`
+
+## 📁 Project Structure
+
+```
+abp/AbpTemplate/
+├── Controllers/          # API Controllers
+├── Data/                # DbContext and migration services
+├── Entities/            # Domain entities
+├── Extensions/          # Extension methods and configurations
+├── Localization/        # Localization resources
+├── Migrations/          # EF Core migrations
+├── ObjectMapping/       # AutoMapper profiles
+├── Permission/          # Permission definitions
+├── Repository/          # Custom repositories
+├── Services/            # Application services and DTOs
+└── Utils/               # Utility classes and constants
+```
+
+## 🔧 Development
+
+### Running Migrations
+
+Migrations run automatically on startup. To create a new migration:
+
+```bash
+cd abp/AbpTemplate
+dotnet ef migrations add MigrationName
+```
+
+### Formatting Code
+
+```bash
+cd abp/AbpTemplate
+dotnet csharpier .
+```
+
+### Adding Packages
+
+```bash
+cd abp/AbpTemplate
+dotnet add package PackageName
+```
+
+## 📚 Documentation
+
+- **For AI Agents**: See [AGENTS.md](AGENTS.md) for detailed guidelines, project structure, and coding conventions
+- **ABP Framework**: <https://docs.abp.io>
+
+## 🎯 Use Cases
+
+This template is ideal for:
+- Rapid prototyping
+- Small to medium-sized applications
+- Projects that don't require strict layer separation
+- React + ABP backend projects
+- Learning ABP Framework
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Commit Message Format
+
+Use conventional commits:
+- `fix:` for bug fixes
+- `docs:` for documentation changes
+- `refactor:` for code refactoring
+- `chore:` for maintenance tasks
+
+## 📝 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## 🙏 Acknowledgments
+
+- [ABP Framework](https://abp.io) - The underlying framework
+- [Volo ABP](https://github.com/abpframework/abp) - The open-source community
+
+## 📞 Support
+
+For issues, questions, or suggestions:
+- Open an issue on GitHub
+- Check the [ABP Framework documentation](https://docs.abp.io)
