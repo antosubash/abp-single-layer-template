@@ -121,6 +121,7 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 redirectUris: reactClientRootUrl
                     .Select(x => $"{x}/auth/openiddict")
                     .Append("https://abp-tanstack.antosubash.com/auth/callback")
+                    .Append("http://localhost:5173/auth/callback")
                     .ToArray(),
                 postLogoutRedirectUris: reactClientRootUrl
             );
