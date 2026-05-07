@@ -118,7 +118,10 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                     OpenIddictConstants.GrantTypes.RefreshToken,
                 },
                 scopes: commonScopes,
-                redirectUris: reactClientRootUrl.Select(x => $"{x}/auth/openiddict").ToArray(),
+                redirectUris: reactClientRootUrl
+                    .Select(x => $"{x}/auth/openiddict")
+                    .Append("https://abp-tanstack.antosubash.com/auth/callback")
+                    .ToArray(),
                 postLogoutRedirectUris: reactClientRootUrl
             );
         }
