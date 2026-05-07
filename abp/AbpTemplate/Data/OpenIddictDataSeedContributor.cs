@@ -212,17 +212,13 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
             throw new BusinessException(L["TheClientSecretIsRequiredForConfidentialApplications"]);
         }
 
-        if (
-            !string.IsNullOrEmpty(name)
-            && await _applicationManager.FindByClientIdAsync(name) != null
-        )
+        var client = await _applicationManager.FindByClientIdAsync(name);
+        if (client != null)
         {
+            await UpdateRedirectUrisAsync(client, redirectUris, postLogoutRedirectUris);
             return;
-            //throw new BusinessException(L["TheClientIdentifierIsAlreadyTakenByAnotherApplication"]);
         }
 
-        var client = await _applicationManager.FindByClientIdAsync(name);
-        if (client == null)
         {
             var application = new OpenIddictApplicationDescriptor
             {
@@ -443,6 +439,75 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
             }
 
             await _applicationManager.CreateAsync(application);
+        }
+    }
+
+    private async Task UpdateRedirectUrisAsync(
+        object client,
+        string[] redirectUris,
+        string[] postLogoutRedirectUris
+    )
+    {
+        var descriptor = new OpenIddictApplicationDescriptor();
+        await _applicationManager.PopulateAsync(descriptor, client);
+
+        var changed = false;
+
+        if (redirectUris != null)
+        {
+            foreach (var redirectUri in redirectUris)
+            {
+                if (redirectUri.IsNullOrEmpty())
+                {
+                    continue;
+                }
+
+                if (
+                    !Uri.TryCreate(redirectUri, UriKind.Absolute, out var uri)
+                    || !uri.IsWellFormedOriginalString()
+                )
+                {
+                    throw new BusinessException(L["InvalidRedirectUri", redirectUri]);
+                }
+
+                if (descriptor.RedirectUris.All(x => x != uri))
+                {
+                    descriptor.RedirectUris.Add(uri);
+                    changed = true;
+                }
+            }
+        }
+
+        if (postLogoutRedirectUris != null)
+        {
+            foreach (var postLogoutRedirectUri in postLogoutRedirectUris)
+            {
+                if (postLogoutRedirectUri.IsNullOrEmpty())
+                {
+                    continue;
+                }
+
+                if (
+                    !Uri.TryCreate(postLogoutRedirectUri, UriKind.Absolute, out var uri)
+                    || !uri.IsWellFormedOriginalString()
+                )
+                {
+                    throw new BusinessException(
+                        L["InvalidPostLogoutRedirectUri", postLogoutRedirectUri]
+                    );
+                }
+
+                if (descriptor.PostLogoutRedirectUris.All(x => x != uri))
+                {
+                    descriptor.PostLogoutRedirectUris.Add(uri);
+                    changed = true;
+                }
+            }
+        }
+
+        if (changed)
+        {
+            await _applicationManager.UpdateAsync(client, descriptor);
         }
     }
 }
